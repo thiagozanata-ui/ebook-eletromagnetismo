@@ -6,9 +6,13 @@
 <title>E-book Eletromagnetismo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- ScrollReveal -->
 <script src="https://unpkg.com/scrollreveal"></script>
 
 <style>
+/* ============================================================
+   VARIÁVEIS / RESET
+============================================================ */
 :root{
   --bg:#050814;
   --accent:#2563eb;
@@ -27,7 +31,9 @@ body{
   overflow-x:hidden;
 }
 
-/* fundo */
+/* ============================================================
+   FUNDO BLUR + MOVIMENTO
+============================================================ */
 .apple-bg{
   position:fixed;
   inset:0;
@@ -52,16 +58,27 @@ body::before{
   z-index:-3;
 }
 
-/* linhas campo */
+/* ============================================================
+   LINHAS DE CAMPO ELÉTRICO
+============================================================ */
 .field-layer{
-  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  overflow:hidden;
 }
+
 .field-line{
-  position:absolute; width:260%; height:2px;
+  position:absolute;
+  width:260%;
+  height:2px;
   background:linear-gradient(90deg,transparent,#38bdf8,#e5e7eb,#38bdf8,transparent);
-  opacity:0.35; border-radius:999px;
+  opacity:0.35;
+  border-radius:999px;
   animation:fieldFlow 18s linear infinite;
 }
+
 .field-line.line1{ top:20%; left:-80%; transform:rotate(-18deg); }
 .field-line.line2{ top:40%; left:-90%; transform:rotate(-8deg); }
 .field-line.line3{ top:60%; left:-70%; transform:rotate(6deg); }
@@ -73,24 +90,34 @@ body::before{
   100%{ transform:translateX(40%); }
 }
 
-/* partículas */
-.particle-layer{ position:fixed; inset:0; pointer-events:none; z-index:-1; }
+/* ============================================================
+   PARTÍCULAS
+============================================================ */
+.particle-layer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+}
 
-/* animação partículas */
 .particle{
   position:absolute;
-  width:6px; height:6px; border-radius:50%;
+  width:6px; height:6px;
   background:#60aaff;
-  box-shadow:0 0 8px #60aaff,0 0 12px #60aaff;
+  border-radius:50%;
+  box-shadow:0 0 8px #60aaff, 0 0 12px #60aaff;
   animation:particleFloat linear infinite;
 }
+
 @keyframes particleFloat{
   0%{ transform:translate(0,0) scale(1); opacity:.7; }
   50%{ transform:translate(40px,-60px) scale(1.4); opacity:1; }
   100%{ transform:translate(-30px,40px) scale(1); opacity:.7; }
 }
 
-/* hero */
+/* ============================================================
+   HERO
+============================================================ */
 .hero{
   min-height:100vh;
   display:flex;
@@ -98,6 +125,7 @@ body::before{
   justify-content:center;
   padding:140px 20px 80px;
 }
+
 .hero-inner{
   width:100%;
   max-width:1250px;
@@ -106,23 +134,40 @@ body::before{
   align-items:center;
   gap:60px;
 }
-.hero-content{ max-width:560px; }
+
+.hero-content{
+  max-width:560px;
+}
 
 .hero-title{
   font-size:clamp(2.7rem,4vw,3.8rem);
   font-weight:700;
-  letter-spacing:-.03em;
   margin-bottom:12px;
+  letter-spacing:-.03em;
 }
+
 .hero-highlight{
   background:linear-gradient(to right,#93c5fd,#e5e7eb);
   -webkit-background-clip:text;
   color:transparent;
 }
 
-.hero-sub{ font-size:1.1rem; color:#d5e4ff; margin-bottom:10px; }
-.hero-sub2{ font-size:1rem; color:#a8b4ce; margin-bottom:28px; }
-.hero-sub2 span{ color:#dbeafe; font-weight:600; }
+.hero-sub{
+  color:#d5e4ff;
+  font-size:1.1rem;
+  margin-bottom:10px;
+}
+
+.hero-sub2{
+  color:#a8b4ce;
+  font-size:1rem;
+  margin-bottom:28px;
+}
+
+.hero-sub2 span{
+  color:#dbeafe;
+  font-weight:600;
+}
 
 .btn-primary{
   padding:14px 32px;
@@ -132,12 +177,18 @@ body::before{
   color:white;
   font-weight:600;
   text-transform:uppercase;
-  cursor:pointer;
   box-shadow:0 20px 40px rgba(0,0,0,0.55);
+  cursor:pointer;
+  transition:.2s;
 }
-.btn-primary:hover{ transform:translateY(-3px); }
 
-/* cartão */
+.btn-primary:hover{
+  transform:translateY(-3px);
+}
+
+/* ============================================================
+   CARTÃO
+============================================================ */
 .hero-card{
   width:360px;
   padding:22px 20px;
@@ -149,7 +200,6 @@ body::before{
   position:relative;
 }
 
-/* texto interno */
 .hero-card-header{
   display:flex;
   justify-content:space-between;
@@ -160,30 +210,32 @@ body::before{
 .hero-pill{
   padding:4px 10px;
   border-radius:999px;
-  border:1px solid rgba(191,219,254,0.6);
   background:rgba(15,23,42,0.7);
+  border:1px solid rgba(191,219,254,0.6);
 }
 
 .hero-card-title{
   font-size:1rem;
   margin-bottom:12px;
 }
+
 .hero-card-field{
   font-size:.86rem;
   color:#9bb0d1;
 }
+
 .hero-card-field span{
   display:block;
   margin-top:4px;
   color:#e9f1ff;
 }
 
-/* ======================================================
-   ★ CARGAS — TOTALMENTE FORA DO CARTÃO ★
-====================================================== */
+/* ============================================================
+   CARGAS (AGORA FORA DO TEXTO)
+============================================================ */
 .hero-charge{
-  width:46px;
-  height:46px;
+  width:42px;
+  height:42px;
   border-radius:50%;
   background:#020617;
   border:2px solid #38bdf8;
@@ -192,63 +244,119 @@ body::before{
   align-items:center;
   justify-content:center;
   position:absolute;
-  font-size:1.4rem;
+  font-size:1.3rem;
   font-weight:700;
-  box-shadow:0 0 18px rgba(56,189,248,0.75);
-  z-index:20;
+  box-shadow:0 0 14px rgba(56,189,248,0.7);
 }
 
-/* + esquerda */
+/* novas posições */
 .float-plus{
-  top:50%;
-  left:-80px;
-  transform:translateY(-50%);
+  top:-20px;
+  left:-20px;
   animation:float1 4s ease-in-out infinite;
 }
 
-/* - direita */
 .float-minus{
-  top:50%;
-  right:-80px;
-  transform:translateY(-50%);
+  bottom:-20px;
+  right:-20px;
   animation:float2 5s ease-in-out infinite;
 }
 
 @keyframes float1{
-  0%,100%{ transform:translate(-2px,-50%); }
-  50%{ transform:translate(4px,-50%); }
+  0%,100%{ transform:translateY(-6px); }
+  50%{ transform:translateY(6px); }
 }
 @keyframes float2{
-  0%,100%{ transform:translate(2px,-50%); }
-  50%{ transform:translate(-4px,-50%); }
+  0%,100%{ transform:translateY(6px); }
+  50%{ transform:translateY(-6px); }
 }
 
-/* PDF */
-.section{ max-width:1200px; margin:60px auto; padding:20px; }
+/* ============================================================
+   PDF – FULLSCREEN
+============================================================ */
+.section{
+  max-width:95%;
+  margin:60px auto;
+  padding:20px;
+}
+
 .pdf-box{
   background:rgba(15,23,42,0.9);
-  border-radius:20px;
-  padding:24px;
+  border-radius:22px;
+  padding:38px 40px;
   border:1px solid rgba(200,220,255,0.38);
-}
-iframe{
-  width:100%;
-  height:650px;
-  background:#020617;
-  border-radius:14px;
-  border:1px solid rgba(59,130,246,0.6);
+  box-shadow:0 0 70px rgba(0,0,0,0.85);
+  position:relative;
 }
 
-/* footer */
+.pdf-viewer{
+  width:100%;
+  height:88vh;
+  border-radius:16px;
+  border:1px solid rgba(59,130,246,0.6);
+  transition:.4s ease-in-out;
+  background:#020617;
+}
+
+.pdf-fullscreen{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:9999 !important;
+  width:100vw !important;
+  height:100vh !important;
+  border-radius:0 !important;
+  border:none !important;
+}
+
+.fullscreen-btn{
+  position:absolute;
+  right:20px;
+  top:20px;
+  padding:10px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#2563eb,#38bdf8);
+  color:white;
+  font-size:.9rem;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+  outline:none;
+  box-shadow:0 0 22px rgba(56,189,248,0.6);
+  transition:.2s;
+  z-index:10000;
+}
+
+.fullscreen-btn:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.1);
+}
+
+.pdf-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(6px);
+  z-index:9998;
+  display:none;
+}
+
+.pdf-backdrop.active{
+  display:block !important;
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
 footer{
   padding:30px;
   text-align:center;
   color:#a8b4ce;
 }
+
 footer b{
-  display:block;
-  margin-top:10px;
   color:#dce7ff;
+  margin-top:10px;
+  display:block;
 }
 
 </style>
@@ -257,6 +365,7 @@ footer b{
 
 <div class="apple-bg"></div>
 
+<!-- LINHAS DE CAMPO -->
 <div class="field-layer">
   <div class="field-line line1"></div>
   <div class="field-line line2"></div>
@@ -265,28 +374,32 @@ footer b{
   <div class="field-line line5"></div>
 </div>
 
+<!-- PARTÍCULAS -->
 <div class="particle-layer" id="particles"></div>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
 
     <div class="hero-content" data-depth="0.35">
-      <h1 class="hero-title">
-        E-book <span class="hero-highlight">Eletromagnetismo</span>
-      </h1>
+
+      <h1 class="hero-title">E-book <span class="hero-highlight">Eletromagnetismo</span></h1>
 
       <p class="hero-sub">Lei de Coulomb e Campo Elétrico aplicada à Engenharia Elétrica.</p>
 
       <p class="hero-sub2">
-        Desenvolvido pelos <span>Alunos da Faculdade de Botucatu</span> — turma
-        <span>Engenharia Elétrica 10N </span>.
+        Desenvolvido na <span>Faculdade Unibr Botucatu</span> — turma
+        <span>Engenharia Elétrica 10N</span>.
       </p>
 
-      <button class="btn-primary" onclick="document.getElementById('leitura').scrollIntoView({behavior:'smooth'});">
+      <button class="btn-primary"
+        onclick="document.getElementById('leitura').scrollIntoView({behavior:'smooth'});">
         Ler Agora
       </button>
+
     </div>
 
+    <!-- CARTÃO -->
     <div class="hero-card">
 
       <div class="hero-card-header">
@@ -309,21 +422,29 @@ footer b{
   </div>
 </section>
 
+<!-- PDF -->
 <section id="leitura" class="section reveal">
   <div class="pdf-box">
     <h2>Visualização do PDF</h2>
     <p style="color:#9db6d8;">E-book Eletromagnetismo — Lei de Coulomb e Campo Elétrico</p>
-    <iframe src="pdf/ebook.pdf"></iframe>
+
+    <button class="fullscreen-btn" id="toggleFull">Tela cheia</button>
+
+    <iframe id="pdfViewer" class="pdf-viewer" src="pdf/ebook.pdf"></iframe>
   </div>
+
+  <div class="pdf-backdrop" id="pdfBg"></div>
 </section>
 
+<!-- FOOTER -->
 <footer class="reveal">
   Thiago Santos Zanata<br>
   Vitor Aparecido dos Santos<br>
   Wellington Ramires
-  <b>Orientador: Dr. Guilherme Augusto Marabezzi Clerice</b>
+  <b>Dr. Guilherme Augusto Marabezzi Clerice</b>
 </footer>
 
+<!-- PARALLAX -->
 <script>
 document.addEventListener("mousemove", e => {
   const x = (window.innerWidth/2 - e.clientX)/40;
@@ -336,6 +457,7 @@ document.addEventListener("mousemove", e => {
 });
 </script>
 
+<!-- ScrollReveal -->
 <script>
 ScrollReveal().reveal('.reveal',{
   duration:1200,
@@ -346,6 +468,7 @@ ScrollReveal().reveal('.reveal',{
 });
 </script>
 
+<!-- GERADOR DE PARTÍCULAS -->
 <script>
 const container = document.getElementById("particles");
 for(let i=0;i<60;i++){
@@ -357,6 +480,28 @@ for(let i=0;i<60;i++){
   p.style.animationDelay=(Math.random()*5)+"s";
   container.appendChild(p);
 }
+</script>
+
+<!-- FULLSCREEN DO PDF -->
+<script>
+const btn = document.getElementById("toggleFull");
+const viewer = document.getElementById("pdfViewer");
+const bg = document.getElementById("pdfBg");
+let full = false;
+
+btn.onclick = () => {
+  full = !full;
+
+  if(full){
+    viewer.classList.add("pdf-fullscreen");
+    bg.classList.add("active");
+    btn.innerText = "Sair da tela cheia";
+  }else{
+    viewer.classList.remove("pdf-fullscreen");
+    bg.classList.remove("active");
+    btn.innerText = "Tela cheia";
+  }
+};
 </script>
 
 </body>
