@@ -22,7 +22,7 @@
 /* ===== BASE ===== */
 body{
   font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#0b1120 url('bg-electromagnetismo.jpg') no-repeat center center fixed;
+  background:#0b1120 url('/bg-electromagnetismo.jpg') no-repeat center center fixed;
   background-size:cover;
   color:var(--text-main);
   overflow-x:hidden;
@@ -328,3 +328,60 @@ footer b{
         <div class="hero-card-header">
           <div class="hero-pill">Lei de Coulomb</div>
           <span>Campo elétrico & cargas</span>
+        </div>
+        <div class="hero-card-title">Interação entre cargas elétricas</div>
+        <div class="hero-card-field">
+          Capítulo 1
+          <span>Introdução • Conceitos básicos • Exemplos numéricos</span>
+        </div>
+        <div class="hero-orbits"></div>
+        <div class="hero-orbits2"></div>
+        <div class="hero-charge plus">+</div>
+        <div class="hero-charge minus">−</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE LEITURA -->
+  <section id="leitura" class="section reveal">
+    <div class="pdf-box">
+      <div class="pdf-header">
+        <div>
+          <div class="pdf-title">Visualização do PDF</div>
+          <div class="pdf-sub">E-book Eletromagnetismo — Lei de Coulomb e Campo Elétrico</div>
+        </div>
+        <div class="pdf-chip-row">
+          <div class="pdf-chip">Somente leitura</div>
+          <div class="pdf-chip">Engenharia Elétrica 10N</div>
+          <div class="pdf-chip">Faculdade Unibr Botucatu</div>
+        </div>
+      </div>
+      <iframe src="/pdf/ebook.pdf"></iframe>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="reveal">
+    <div class="names">
+      Thiago Santos Zanata<br>
+      Vitor Aparecido dos Santos<br>
+      Wellington Ramires
+      <b>Dr. Guilherme Augusto Marabezzi Clerice</b>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+ScrollReveal().reveal('.reveal', {
+  duration: 1200,
+  distance: '60px',
+  easing: 'ease-out',
+  origin: 'bottom',
+  interval: 160,
+  opacity: 0
+});
+</script>
+
+</body>
+</html>
