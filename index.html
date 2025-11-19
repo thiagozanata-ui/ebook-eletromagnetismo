@@ -6,38 +6,31 @@
 <title>E-book Eletromagnetismo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ScrollReveal para animações -->
+<!-- ScrollReveal -->
 <script src="https://unpkg.com/scrollreveal"></script>
 
 <style>
-/* ======================================
-   VARIÁVEIS E RESET
-====================================== */
+/* ============================================================
+   VARIÁVEIS / RESET
+============================================================ */
 :root{
   --bg:#050814;
   --accent:#2563eb;
-  --accent-soft:#dbeafe;
   --text-main:#f1f5f9;
-  --text-muted:#94a3b8;
-  --glass-bg:rgba(15,23,42,0.45);
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{ margin:0; padding:0; box-sizing:border-box; }
 
 body{
-  font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#0b1120;
+  font-family:"Inter",sans-serif;
+  background:#020617;
   color:var(--text-main);
   overflow-x:hidden;
 }
 
-/* ======================================
-   BACKGROUND ANIMADO ESTILO APPLE
-====================================== */
+/* ============================================================
+   FUNDO APPLE + MOVIMENTO
+============================================================ */
 .apple-bg{
   position:fixed;
   inset:0;
@@ -54,26 +47,79 @@ body{
   100%{ transform:scale(1.26) translateY(16px); }
 }
 
-/* Overlay escuro */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.8));
+  background:radial-gradient(circle at top,#020617cc 0,#020617 55%);
   z-index:-3;
 }
 
-/* ======================================
-   HERO — APPLE STYLE PARALLAX
-====================================== */
+/* ============================================================
+   LINHAS DE CAMPO ELÉTRICO
+============================================================ */
+.field-layer{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+}
 
+.field-line{
+  position:absolute;
+  width:240%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,#e5e7eb,#38bdf8,transparent);
+  opacity:.35;
+  border-radius:999px;
+  animation:fieldFlow 16s linear infinite;
+}
+
+.field-line.l1{ top:18%; left:-70%; transform:rotate(-14deg); animation-duration:18s; }
+.field-line.l2{ top:35%; left:-85%; transform:rotate(-5deg);  animation-duration:16s; }
+.field-line.l3{ top:52%; left:-75%; transform:rotate(7deg);   animation-duration:20s; }
+.field-line.l4{ top:70%; left:-90%; transform:rotate(13deg);  animation-duration:22s; opacity:.28; }
+.field-line.l5{ top:30%; left:-60%; transform:rotate(10deg);  animation-duration:19s; opacity:.32; }
+
+@keyframes fieldFlow{
+  0%{ transform:translateX(0); }
+  100%{ transform:translateX(40%); }
+}
+
+/* ============================================================
+   PARTÍCULAS ELETROMAGNÉTICAS
+============================================================ */
+.particle-layer{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+}
+
+.particle{
+  position:absolute;
+  width:6px; height:6px;
+  border-radius:50%;
+  background:#60aaff;
+  box-shadow:0 0 8px #60aaff, 0 0 12px #60aaff;
+  animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+  0%{ transform:translate(0,0) scale(1); opacity:.7; }
+  50%{ transform:translate(40px,-60px) scale(1.4); opacity:1; }
+  100%{ transform:translate(-30px,40px) scale(1); opacity:.7; }
+}
+
+/* ============================================================
+   HERO
+============================================================ */
 .hero{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:120px 20px;
-  position:relative;
+  padding:140px 20px 80px;
 }
 
 .hero-inner{
@@ -95,17 +141,14 @@ body::before{
   gap:8px;
   padding:6px 12px;
   font-size:.75rem;
-  text-transform:uppercase;
   border-radius:999px;
-  background:rgba(15,23,42,0.6);
-  border:1px solid rgba(200,220,255,0.4);
-  letter-spacing:.14em;
+  background:rgba(15,23,42,0.7);
+  border:1px solid rgba(200,220,255,0.45);
   margin-bottom:20px;
 }
 
 .badge-dot{
-  width:8px;
-  height:8px;
+  width:8px; height:8px;
   border-radius:50%;
   background:#22c55e;
   box-shadow:0 0 12px #22c55e;
@@ -114,8 +157,6 @@ body::before{
 .hero-title{
   font-size:clamp(2.7rem,4vw,3.8rem);
   font-weight:700;
-  letter-spacing:-.03em;
-  margin-bottom:12px;
 }
 
 .hero-highlight{
@@ -124,136 +165,69 @@ body::before{
   color:transparent;
 }
 
-.hero-sub{
-  font-size:1.1rem;
-  color:#d5e4ff;
-  margin-bottom:10px;
-}
+.hero-sub{ font-size:1.1rem; margin:12px 0; }
+.hero-sub2{ color:#adb9ce; margin-bottom:28px; }
 
-.hero-sub2{
-  font-size:1rem;
-  color:#a8b4ce;
-  margin-bottom:28px;
-}
 .hero-sub2 span{
   color:#dbeafe;
   font-weight:600;
 }
 
 .btn-primary{
-  border:none;
-  border-radius:999px;
   padding:14px 32px;
-  font-weight:600;
-  font-size:1rem;
-  text-transform:uppercase;
-  cursor:pointer;
+  border-radius:999px;
   background:linear-gradient(135deg,#2563eb,#38bdf8);
   color:white;
-  box-shadow:0 20px 40px rgba(0,0,0,0.5);
-  transition:transform .2s, box-shadow .2s;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+  text-transform:uppercase;
+  box-shadow:0 20px 40px rgba(0,0,0,0.55);
 }
 
 .btn-primary:hover{
   transform:translateY(-3px);
-  box-shadow:0 28px 55px rgba(0,0,0,0.65);
 }
 
-.hero-note{
-  font-size:.85rem;
-  color:#94a3b8;
-  margin-top:10px;
-}
-
-/* ======================================
-   CARTÃO LATERAL GLASSMORPHISM
-====================================== */
-
-.hero-visual{
-  transition:transform .25s ease-out;
-}
-
+/* ============================================================
+   CARTÃO COM CARGAS (+ e -)
+============================================================ */
 .hero-card{
-  width:100%;
-  max-width:360px;
+  width:360px;
   padding:22px 20px;
   border-radius:26px;
-  background:var(--glass-bg);
-  backdrop-filter:blur(26px) saturate(1.6);
-  border:1px solid rgba(200,220,255,0.4);
+  background:rgba(15,23,42,0.45);
+  backdrop-filter:blur(26px);
+  border:1px solid rgba(200,220,255,0.45);
   box-shadow:0 40px 100px rgba(0,0,0,0.8);
   position:relative;
-  overflow:hidden;
-  animation:fadePop 1.4s ease forwards;
-  opacity:0;
-  transform:scale(.92);
 }
 
-@keyframes fadePop{
-  to{ opacity:1; transform:scale(1); }
-}
-
-.hero-card-header{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:12px;
-  font-size:.82rem;
-  color:#dce7ff;
-}
-
-.hero-pill{
-  padding:4px 10px;
-  border-radius:999px;
-  border:1px solid rgba(191,219,254,0.6);
-  background:rgba(15,23,42,0.6);
-}
-
-.hero-card-title{
-  font-size:1rem;
-  font-weight:600;
-  margin-bottom:12px;
-  color:#e2edff;
-}
-
-.hero-card-field{
-  font-size:.86rem;
-  color:#9bb0d1;
-}
-.hero-card-field span{
-  display:block;
-  margin-top:4px;
-  color:#e9f1ff;
-}
-
-/* ÓRBITAS ANIMADAS */
-.hero-orbits,.hero-orbits2{
-  position:absolute;
-  inset:18%;
-  border-radius:50%;
-  border:1px solid rgba(200,220,255,0.33);
-}
-.hero-orbits{ border-top-color:transparent; border-bottom-color:transparent; transform:rotate(-18deg); }
-.hero-orbits2{ inset:8%; border-left-color:transparent; border-right-color:transparent; transform:rotate(24deg); }
-
-/* CARGAS FLUTUANTES */
+/* CARGAS */
 .hero-charge{
-  width:34px;
-  height:34px;
+  width:38px; height:38px;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   border-radius:50%;
-  font-size:1.1rem;
-  font-weight:700;
-  color:#e0f8ff;
+  font-size:1.3rem;
   border:2px solid #38bdf8;
   background:#020617;
-  box-shadow:0 0 20px rgba(56,189,248,0.7);
   position:absolute;
+  color:white;
+  box-shadow:0 0 12px #38bdf8;
+  z-index:10;
 }
 
-.float-plus{ animation:float1 4s ease-in-out infinite; top:28%; left:14%; }
-.float-minus{ animation:float2 5s ease-in-out infinite; bottom:20%; right:16%; }
+.float-plus{
+  top:25%; left:12%;
+  animation:float1 4s ease-in-out infinite;
+}
+
+.float-minus{
+  bottom:22%; right:14%;
+  animation:float2 5s ease-in-out infinite;
+}
 
 @keyframes float1{
   0%,100%{ transform:translateY(-6px); }
@@ -264,166 +238,57 @@ body::before{
   50%{ transform:translateY(-6px); }
 }
 
-/* ======================================
-   SEÇÃO DO PDF
-====================================== */
-
-.section{
-  max-width:1200px;
-  margin:60px auto;
-  padding:20px;
-}
-
-.pdf-box{
-  background:rgba(15,23,42,0.85);
-  border-radius:20px;
-  padding:24px;
-  border:1px solid rgba(200,220,255,0.35);
-  box-shadow:0 0 60px rgba(0,0,0,0.7);
-}
-
-iframe{
-  width:100%;
-  height:650px;
-  border-radius:14px;
-  border:1px solid rgba(59,130,246,0.5);
-  background:#020617;
-}
-
-/* ======================================
-   FOOTER
-====================================== */
-
-footer{
-  padding:30px 20px;
-  text-align:center;
-  font-size:1rem;
-  color:#a8b4ce;
-}
-footer b{
-  display:block;
-  margin-top:10px;
-  color:#dce7ff;
-}
-
-/* ======================================
-   RESPONSIVO
-====================================== */
-@media(max-width:900px){
-  .hero-inner{
-    flex-direction:column;
-    text-align:center;
-    gap:50px;
-  }
-}
 </style>
-
 </head>
 <body>
 
 <div class="apple-bg"></div>
 
-<!-- HERO COMPLETO -->
-<section class="hero" id="home">
+<!-- CAMADAS -->
+<div class="field-layer">
+  <div class="field-line l1"></div>
+  <div class="field-line l2"></div>
+  <div class="field-line l3"></div>
+  <div class="field-line l4"></div>
+  <div class="field-line l5"></div>
+</div>
 
+<div class="particle-layer" id="particles"></div>
+
+<!-- HERO -->
+<section class="hero">
   <div class="hero-inner">
 
     <div class="hero-content" data-depth="0.35">
-      <div class="badge">
-        <span class="badge-dot"></span>
-        <span>E-book Acadêmico em Eletromagnetismo</span>
-      </div>
+      <div class="badge"><span class="badge-dot"></span> E-book Acadêmico em Eletromagnetismo</div>
 
       <h1 class="hero-title">
         E-book <span class="hero-highlight">Eletromagnetismo</span>
       </h1>
 
-      <p class="hero-sub">
-        Lei de Coulomb e Campo Elétrico aplicada à Engenharia Elétrica,
-        com foco claro, moderno e didático.
-      </p>
+      <p class="hero-sub">Lei de Coulomb e Campo Elétrico aplicada à Engenharia Elétrica.</p>
 
       <p class="hero-sub2">
-        Desenvolvido na <span>Faculdade Unibr Botucatu</span> — turma
-        <span>Engenharia Elétrica 10N</span>.
+        Desenvolvido na <span>Faculdade Unibr Botucatu</span> —
+        turma <span>Engenharia Elétrica 10N</span>.
       </p>
 
       <button class="btn-primary"
-      onclick="document.getElementById('leitura').scrollIntoView({behavior:'smooth'});">
+        onclick="document.getElementById('leitura').scrollIntoView({behavior:'smooth'});">
         Ler Agora
       </button>
-
-      <div class="hero-note">Visualização em tela cheia e interativa</div>
     </div>
 
-    <div class="hero-visual" data-depth="0.65">
-      <div class="hero-card">
-        <div class="hero-card-header">
-          <div class="hero-pill">Lei de Coulomb</div>
-          <span>Campo elétrico & cargas</span>
-        </div>
+    <div class="hero-card">
+      <div class="hero-charge float-plus" id="chargePlus">+</div>
+      <div class="hero-charge float-minus" id="chargeMinus">−</div>
 
-        <div class="hero-card-title">Interação entre cargas elétricas</div>
-
-        <div class="hero-card-field">
-          Capítulo 1
-          <span>Conceitos básicos • Força elétrica • Exemplos práticos</span>
-        </div>
-
-        <div class="hero-orbits"></div>
-        <div class="hero-orbits2"></div>
-
-        <div class="hero-charge float-plus">+</div>
-        <div class="hero-charge float-minus">−</div>
-      </div>
+      <!-- CANVAS DO TESLA COIL -->
+      <canvas id="teslaPlus"></canvas>
+      <canvas id="teslaMinus"></canvas>
     </div>
 
   </div>
 </section>
 
-<!-- ===== SEÇÃO DO PDF ===== -->
-<section id="leitura" class="section reveal">
-  <div class="pdf-box">
-    <h2 style="margin-bottom:10px;">Visualização do PDF</h2>
-    <p style="margin-bottom:20px;color:#9db6d8;">
-      E-book Eletromagnetismo — Lei de Coulomb e Campo Elétrico
-    </p>
-    <iframe src="pdf/ebook.pdf"></iframe>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer class="reveal">
-  Thiago Santos Zanata<br>
-  Vitor Aparecido dos Santos<br>
-  Wellington Ramires
-  <b>Dr. Guilherme Augusto Marabezzi Clerice</b>
-</footer>
-
-<!-- PARALLAX MOUSE MOVEMENT -->
-<script>
-document.addEventListener("mousemove", e => {
-  const x = (window.innerWidth/2 - e.clientX)/40;
-  const y = (window.innerHeight/2 - e.clientY)/40;
-
-  document.querySelectorAll("[data-depth]").forEach(el=>{
-    const d = el.getAttribute("data-depth");
-    el.style.transform = `translate(${x*d}px, ${y*d}px)`;
-  });
-});
-</script>
-
-<!-- ScrollReveal -->
-<script>
-ScrollReveal().reveal('.reveal',{
-  duration:1200,
-  distance:'60px',
-  easing:'ease-out',
-  origin:'bottom',
-  interval:160,
-  opacity:0
-});
-</script>
-
-</body>
-</html>
+<!-- AQUI TERMINA A PARTE 1 -->
