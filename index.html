@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>E-book Eletromagnetismo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ScrollReveal for scroll animations -->
+<script src="https://unpkg.com/scrollreveal"></script>
+<style>
+:root{
+  --bg:#050814;
+  --accent:#2563eb;
+  --accent-soft:#dbeafe;
+  --text-main:#0b1120;
+  --text-muted:#4b5563;
+  --card-bg:#ffffff;
+}
+
+/* ===== RESET ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+
+/* ===== BASE ===== */
+body{
+  font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#0b1120 url('/bg-electromagnetismo.jpg') no-repeat center center fixed;
+  background-size:cover;
+  color:var(--text-main);
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at top,#1d4ed8aa 0,#020617 55%);
+  mix-blend-mode:soft-light;
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* CONTAINER */
+.page{
+  min-height:100vh;
+  background:linear-gradient(to bottom,rgba(15,23,42,0.5),rgba(15,23,42,0.9));
+  color:#f9fafb;
+}
+
+/* ===== HERO ===== */
+.hero{
+  max-width:1200px;
+  margin:0 auto;
+  padding:72px 20px 40px;
+  display:grid;
+  grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+  gap:44px;
+  align-items:center;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:0.75rem;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(15,23,42,0.7);
+  border:1px solid rgba(148,163,184,0.6);
+  color:#e5e7eb;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+}
+.badge-dot{
+  width:8px;height:8px;border-radius:999px;
+  background:#22c55e;
+  box-shadow:0 0 12px #22c55e;
+}
+.hero-title{
+  font-size:clamp(2.4rem,4vw,3.4rem);
+  font-weight:700;
+  letter-spacing:-0.04em;
+  margin-top:18px;
+  margin-bottom:10px;
+}
+.hero-highlight{
+  background:linear-gradient(to right,#93c5fd,#e5e7eb);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.hero-sub{
+  font-size:1.05rem;
+  color:#cbd5f5;
+  max-width:30rem;
+  margin-bottom:8px;
+}
+.hero-sub2{
+  font-size:0.95rem;
+  color:#9ca3af;
+  margin-bottom:24px;
+}
+.hero-sub2 span{
+  color:#bfdbfe;
+  font-weight:500;
+}
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+}
+.btn-primary{
+  border:none;
+  border-radius:999px;
+  padding:12px 26px;
+  font-weight:600;
+  font-size:0.95rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  background:linear-gradient(135deg,#2563eb,#38bdf8);
+  color:white;
+  box-shadow:0 18px 35px rgba(15,23,42,0.7);
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 24px 45px rgba(15,23,42,0.85);
+  filter:brightness(1.05);
+}
+.hero-note{
+  font-size:0.82rem;
+  color:#9ca3af;
+}
+
+/* HERO SIDE CARD */
+.hero-visual{
+  display:flex;
+  justify-content:center;
+}
+.hero-card{
+  width:100%;
+  max-width:360px;
+  border-radius:26px;
+  padding:20px 18px 18px;
+  background:radial-gradient(circle at top,#1d4ed8 0,#020617 70%);
+  box-shadow:0 24px 60px rgba(15,23,42,0.95);
+  border:1px solid rgba(191,219,254,0.5);
+  position:relative;
+  overflow:hidden;
+}
+.hero-card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+  font-size:0.78rem;
+  color:#e5e7eb;
+}
+.hero-pill{
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid rgba(191,219,254,0.7);
+  background:rgba(15,23,42,0.6);
+}
+.hero-card-title{
+  font-size:0.9rem;
+  font-weight:600;
+  color:#e5e7eb;
+  margin-bottom:12px;
+}
+.hero-card-field{
+  font-size:0.8rem;
+  color:#9ca3af;
+}
+.hero-card-field span{
+  display:block;
+  color:#e5e7eb;
+  margin-top:2px;
+}
+.hero-orbits{
+  position:absolute;
+  inset:18%;
+  border-radius:999px;
+  border:1px solid rgba(191,219,254,0.3);
+  border-top-color:transparent;
+  border-bottom-color:transparent;
+  transform:rotate(-18deg);
+}
+.hero-orbits2{
+  position:absolute;
+  inset:8%;
+  border-radius:999px;
+  border:1px solid rgba(59,130,246,0.5);
+  border-left-color:transparent;
+  border-right-color:transparent;
+  transform:rotate(24deg);
+}
+.hero-charge{
+  position:absolute;
+  width:32px;height:32px;
+  border-radius:999px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;
+  font-size:1rem;
+  background:#020617;
+  border:2px solid #38bdf8;
+  color:#e0f2fe;
+  box-shadow:0 0 18px rgba(56,189,248,0.7);
+}
+.hero-charge.plus{top:30%;left:14%;}
+.hero-charge.minus{bottom:22%;right:16%;}
+
+/* ===== SECTION LEITURA ===== */
+.section{
+  max-width:1200px;
+  margin:40px auto 0;
+  padding:0 20px 60px;
+}
+.pdf-box{
+  background:rgba(15,23,42,0.9);
+  border-radius:20px;
+  padding:26px 24px 28px;
+  border:1px solid rgba(148,163,184,0.6);
+  box-shadow:0 22px 55px rgba(0,0,0,0.9);
+  color:#e5e7eb;
+}
+.pdf-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:16px;
+  margin-bottom:18px;
+}
+.pdf-title{
+  font-size:1.4rem;
+  font-weight:600;
+}
+.pdf-sub{
+  font-size:0.9rem;
+  color:#9ca3af;
+}
+.pdf-chip-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  font-size:0.7rem;
+}
+.pdf-chip{
+  padding:4px 8px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,0.7);
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  color:#9ca3af;
+}
+iframe{
+  width:100%;
+  height:680px;
+  border-radius:14px;
+  border:1px solid rgba(30,64,175,0.6);
+  background:#020617;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  padding:26px 20px 32px;
+  text-align:center;
+  font-size:0.98rem;
+  color:#9ca3af;
+}
+footer .names{
+  line-height:1.7;
+}
+footer b{
+  display:block;
+  margin-top:8px;
+  font-size:1.05rem;
+  color:#e5e7eb;
+}
+
+/* ===== RESPONSIVO ===== */
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    padding-top:54px;
+  }
+  .hero-visual{
+    order:-1;
+  }
+}
+@media(max-width:600px){
+  header h1{
+    font-size:2.4rem;
+  }
+  iframe{
+    height:520px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HERO / TELA INICIAL -->
+  <section class="hero reveal">
+    <div>
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>E-book Acadêmico em Eletromagnetismo</span>
+      </div>
+      <h1 class="hero-title">
+        E-book <span class="hero-highlight">Eletromagnetismo</span>
+      </h1>
+      <p class="hero-sub">Lei de Coulomb e Campo Elétrico aplicada à Engenharia Elétrica, com foco claro, visual e didático.</p>
+      <p class="hero-sub2">
+        Desenvolvido na <span>Faculdade Unibr Botucatu</span> — turma <span>Engenharia Elétrica 10N</span>.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('leitura').scrollIntoView({behavior:'smooth'});">
+          Ler agora
+        </button>
+        <div class="hero-note">
+          Visualização em tela cheia, sem necessidade de download.
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-pill">Lei de Coulomb</div>
+          <span>Campo elétrico & cargas</span>
+        </div>
+        <div class="hero-card-title">Interação entre cargas elétricas</div>
+        <div class="hero-card-field">
+          Capítulo 1
+          <span>Introdução • Conceitos básicos • Exemplos numéricos</span>
+        </div>
+        <div class="hero-orbits"></div>
+        <div class="hero-orbits2"></div>
+        <div class="hero-charge plus">+</div>
+        <div class="hero-charge minus">−</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE LEITURA -->
+  <section id="leitura" class="section reveal">
+    <div class="pdf-box">
+      <div class="pdf-header">
+        <div>
+          <div class="pdf-title">Visualização do PDF</div>
+          <div class="pdf-sub">E-book Eletromagnetismo — Lei de Coulomb e Campo Elétrico</div>
+        </div>
+        <div class="pdf-chip-row">
+          <div class="pdf-chip">Somente leitura</div>
+          <div class="pdf-chip">Engenharia Elétrica 10N</div>
+          <div class="pdf-chip">Faculdade Unibr Botucatu</div>
+        </div>
+      </div>
+      <iframe src="/pdf/ebook.pdf"></iframe>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="reveal">
+    <div class="names">
+      Thiago Santos Zanata<br>
+      Vitor Aparecido dos Santos<br>
+      Wellington Ramires
+      <b>Dr. Guilherme Augusto Marabezzi Clerice</b>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+ScrollReveal().reveal('.reveal', {
+  duration: 1200,
+  distance: '60px',
+  easing: 'ease-out',
+  origin: 'bottom',
+  interval: 160,
+  opacity: 0
+});
+</script>
+
+</body>
+</html>
