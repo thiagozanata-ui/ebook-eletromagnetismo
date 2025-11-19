@@ -10,39 +10,35 @@
 <script src="https://unpkg.com/scrollreveal"></script>
 
 <style>
-/* ======================================
-   VARIÁVEIS E RESET
-====================================== */
+/* ============================================================
+   VARIÁVEIS / RESET
+============================================================ */
 :root{
-  --bg:#020617;
+  --bg:#050814;
   --accent:#2563eb;
+  --accent-soft:#dbeafe;
   --text-main:#f1f5f9;
-  --text-muted:#a8b4ce;
+  --text-muted:#94a3b8;
   --glass-bg:rgba(15,23,42,0.45);
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{ box-sizing:border-box; margin:0; padding:0; }
 
 body{
   font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:var(--bg);
+  background:#020617;
   color:var(--text-main);
   overflow-x:hidden;
 }
 
-/* ======================================
-   FUNDO DINÂMICO
-====================================== */
-
+/* ============================================================
+   FUNDO BLUR + MOVIMENTO
+============================================================ */
 .apple-bg{
   position:fixed;
   inset:0;
-  background:url("bg-electromagnetismo.jpg") center/cover no-repeat;
-  filter:blur(20px) brightness(1.25) saturate(1.4);
+  background:url('bg-electromagnetismo.jpg') center/cover no-repeat;
+  filter:blur(18px) brightness(1.25) saturate(1.4);
   opacity:0.55;
   transform:scale(1.2);
   z-index:-4;
@@ -54,24 +50,23 @@ body{
   100%{ transform:scale(1.26) translateY(16px); }
 }
 
-/* overlay escuro */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:radial-gradient(circle at top,#000000cc 0, #000000 55%);
+  background:radial-gradient(circle at top,#020617cc 0,#020617 55%);
   z-index:-3;
 }
 
-/* ======================================
+/* ============================================================
    LINHAS DE CAMPO
-====================================== */
-
+============================================================ */
 .field-layer{
   position:fixed;
   inset:0;
-  pointer-events:none;
   z-index:-2;
+  pointer-events:none;
+  overflow:hidden;
 }
 
 .field-line{
@@ -79,40 +74,64 @@ body::before{
   width:260%;
   height:2px;
   background:linear-gradient(90deg,transparent,#38bdf8,#e5e7eb,#38bdf8,transparent);
-  opacity:0.32;
+  opacity:0.35;
   border-radius:999px;
-  animation:flow 16s linear infinite;
+  animation:fieldFlow 18s linear infinite;
 }
 
-@keyframes flow{
+.field-line.line1{ top:20%; left:-80%; transform:rotate(-18deg); }
+.field-line.line2{ top:40%; left:-90%; transform:rotate(-8deg); }
+.field-line.line3{ top:60%; left:-70%; transform:rotate(6deg); }
+.field-line.line4{ top:75%; left:-85%; transform:rotate(16deg); opacity:.28; }
+.field-line.line5{ top:32%; left:-60%; transform:rotate(12deg); opacity:.32; }
+
+@keyframes fieldFlow{
   0%{ transform:translateX(0); }
   100%{ transform:translateX(40%); }
 }
 
-.field-line.l1{ top:22%; left:-80%; transform:rotate(-16deg); animation-duration:18s; }
-.field-line.l2{ top:40%; left:-90%; transform:rotate(-6deg);  animation-duration:16s; }
-.field-line.l3{ top:59%; left:-60%; transform:rotate(8deg);   animation-duration:20s; }
-.field-line.l4{ top:73%; left:-85%; transform:rotate(15deg);  animation-duration:22s; }
-.field-line.l5{ top:33%; left:-68%; transform:rotate(10deg);  animation-duration:19s; }
+/* ============================================================
+   PARTÍCULAS
+============================================================ */
+.particle-layer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+}
 
-/* ======================================
+.particle{
+  position:absolute;
+  width:6px; height:6px;
+  background:#60aaff;
+  border-radius:50%;
+  box-shadow:0 0 8px #60aaff, 0 0 12px #60aaff;
+  animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+  0%{ transform:translate(0,0) scale(1); opacity:.7; }
+  50%{ transform:translate(40px,-60px) scale(1.4); opacity:1; }
+  100%{ transform:translate(-30px,40px) scale(1); opacity:.7; }
+}
+
+/* ============================================================
    HERO
-====================================== */
-
+============================================================ */
 .hero{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:120px 20px 80px;
+  padding:140px 20px 80px;
 }
 
 .hero-inner{
   width:100%;
   max-width:1250px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   gap:60px;
 }
 
@@ -120,28 +139,11 @@ body::before{
   max-width:560px;
 }
 
-.badge{
-  display:inline-flex;
-  gap:8px;
-  padding:6px 12px;
-  font-size:.75rem;
-  text-transform:uppercase;
-  border-radius:999px;
-  background:rgba(15,23,42,0.7);
-  border:1px solid rgba(200,220,255,0.45);
-  letter-spacing:.14em;
-  margin-bottom:20px;
-}
-
-.badge-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 0 12px #22c55e;
-}
-
 .hero-title{
-  font-size:clamp(2.7rem,4vw,4rem);
+  font-size:clamp(2.7rem,4vw,3.8rem);
   font-weight:700;
+  margin-bottom:12px;
+  letter-spacing:-.03em;
 }
 
 .hero-highlight{
@@ -151,125 +153,88 @@ body::before{
 }
 
 .hero-sub{
-  font-size:1.15rem;
-  color:#dbe4ff;
-  margin:14px 0;
+  color:#d5e4ff;
+  font-size:1.1rem;
+  margin-bottom:10px;
 }
 
 .hero-sub2{
   color:#a8b4ce;
   font-size:1rem;
-  margin-bottom:30px;
+  margin-bottom:28px;
 }
 
 .hero-sub2 span{
-  color:#bfd8ff;
+  color:#dbeafe;
   font-weight:600;
 }
 
 .btn-primary{
   padding:14px 32px;
   border-radius:999px;
+  border:none;
   background:linear-gradient(135deg,#2563eb,#38bdf8);
   color:white;
   font-weight:600;
   text-transform:uppercase;
-  border:none;
+  box-shadow:0 20px 40px rgba(0,0,0,0.55);
   cursor:pointer;
-  box-shadow:0 20px 40px rgba(0,0,0,0.6);
+  transition:.2s;
 }
 
 .btn-primary:hover{
   transform:translateY(-3px);
-  box-shadow:0 28px 55px rgba(0,0,0,0.75);
 }
 
-/* ======================================
-   CARTÃO LATERAL GLASS
-====================================== */
-
-.hero-visual{
-  position:relative;
-}
-
+/* ============================================================
+   CARTÃO
+============================================================ */
 .hero-card{
   width:360px;
-  padding:24px 22px;
+  padding:22px 20px;
   border-radius:26px;
   background:var(--glass-bg);
-  border:1px solid rgba(200,220,255,0.4);
-  backdrop-filter:blur(26px) saturate(1.7);
+  backdrop-filter:blur(26px);
+  border:1px solid rgba(200,220,255,0.45);
   box-shadow:0 40px 100px rgba(0,0,0,0.8);
   position:relative;
-  overflow:hidden;
 }
 
 .hero-card-header{
   display:flex;
   justify-content:space-between;
   margin-bottom:12px;
-  font-size:.85rem;
-  color:#dce7ff;
+  color:#e2edff;
 }
 
 .hero-pill{
   padding:4px 10px;
   border-radius:999px;
-  border:1px solid rgba(191,219,254,0.6);
   background:rgba(15,23,42,0.7);
+  border:1px solid rgba(191,219,254,0.6);
 }
 
 .hero-card-title{
-  font-size:1.1rem;
-  font-weight:600;
+  font-size:1rem;
   margin-bottom:12px;
 }
 
 .hero-card-field{
-  font-size:.9rem;
+  font-size:.86rem;
   color:#9bb0d1;
 }
-
 .hero-card-field span{
   display:block;
-  margin-top:4px;
   color:#e9f1ff;
+  margin-top:4px;
 }
 
-/* ======================================
-   ÓRBITAS AJUSTADAS (fora do card)
-====================================== */
-
-.hero-orbits,
-.hero-orbits2{
-  position:absolute;
-  border-radius:50%;
-  pointer-events:none;
-}
-
-.hero-orbits{
-  inset:-25%;
-  border:1px solid rgba(200,220,255,0.20);
-  border-top-color:transparent;
-  border-bottom-color:transparent;
-  transform:rotate(-22deg);
-}
-
-.hero-orbits2{
-  inset:-35%;
-  border:1px solid rgba(56,189,248,0.28);
-  border-left-color:transparent;
-  border-right-color:transparent;
-  transform:rotate(22deg);
-}
-
-/* ======================================
-   CARGAS — AGORA FORA DO CARD
-====================================== */
-
+/* ============================================================
+   CARGAS REPOSICIONADAS (agora abaixo)
+============================================================ */
 .hero-charge{
-  width:48px;
-  height:48px;
+  width:42px;
+  height:42px;
   border-radius:50%;
   background:#020617;
   border:2px solid #38bdf8;
@@ -277,24 +242,22 @@ body::before{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1.4rem;
-  font-weight:700;
-  box-shadow:0 0 20px rgba(56,189,248,0.7);
   position:absolute;
-  z-index:5;
+  font-size:1.3rem;
+  font-weight:700;
+  box-shadow:0 0 14px rgba(56,189,248,0.7);
 }
 
-/* Superior esquerda */
+/* ★ NOVO POSICIONAMENTO – MAIS BAIXO */
 .float-plus{
-  top:-40px;
-  left:-40px;
+  top:38%;     /* antes 15% → descido */
+  left:4%;
   animation:float1 4s ease-in-out infinite;
 }
 
-/* Inferior direita */
 .float-minus{
-  bottom:-40px;
-  right:-40px;
+  bottom:38%;  /* antes 15% → descido */
+  right:6%;
   animation:float2 5s ease-in-out infinite;
 }
 
@@ -302,16 +265,14 @@ body::before{
   0%,100%{ transform:translateY(-6px); }
   50%{ transform:translateY(6px); }
 }
-
 @keyframes float2{
   0%,100%{ transform:translateY(6px); }
   50%{ transform:translateY(-6px); }
 }
 
-/* ======================================
-   SEÇÃO PDF
-====================================== */
-
+/* ============================================================
+   PDF
+============================================================ */
 .section{
   max-width:1200px;
   margin:60px auto;
@@ -329,75 +290,57 @@ body::before{
 iframe{
   width:100%;
   height:650px;
-  border-radius:14px;
   background:#020617;
+  border-radius:14px;
   border:1px solid rgba(59,130,246,0.6);
 }
 
-/* ======================================
+/* ============================================================
    FOOTER
-====================================== */
-
+============================================================ */
 footer{
-  padding:40px 20px;
+  padding:30px;
   text-align:center;
   color:#a8b4ce;
-  font-size:1rem;
 }
 
 footer b{
-  display:block;
-  margin-top:10px;
   color:#dce7ff;
+  margin-top:10px;
+  display:block;
 }
 
-/* ======================================
-   RESPONSIVO
-====================================== */
-
-@media(max-width:900px){
-  .hero-inner{
-    flex-direction:column;
-    text-align:center;
-    gap:50px;
-  }
-}
 </style>
-
 </head>
 <body>
 
 <div class="apple-bg"></div>
 
-<!-- CAMPO ELETROSTÁTICO -->
+<!-- LINHAS DE CAMPO -->
 <div class="field-layer">
-  <div class="field-line l1"></div>
-  <div class="field-line l2"></div>
-  <div class="field-line l3"></div>
-  <div class="field-line l4"></div>
-  <div class="field-line l5"></div>
+  <div class="field-line line1"></div>
+  <div class="field-line line2"></div>
+  <div class="field-line line3"></div>
+  <div class="field-line line4"></div>
+  <div class="field-line line5"></div>
 </div>
+
+<!-- PARTÍCULAS -->
+<div class="particle-layer" id="particles"></div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
 
     <div class="hero-content" data-depth="0.35">
+      
+      <h1 class="hero-title">E-book <span class="hero-highlight">Eletromagnetismo</span></h1>
 
-      <div class="badge"><span class="badge-dot"></span>E-book Acadêmico em Eletromagnetismo</div>
-
-      <h1 class="hero-title">
-        E-book <span class="hero-highlight">Eletromagnetismo</span>
-      </h1>
-
-      <p class="hero-sub">
-        Lei de Coulomb e Campo Elétrico aplicada à Engenharia Elétrica,
-        com foco claro, moderno e didático.
-      </p>
+      <p class="hero-sub">Lei de Coulomb e Campo Elétrico aplicada à Engenharia Elétrica.</p>
 
       <p class="hero-sub2">
-        Desenvolvido na <span>Faculdade Unibr Botucatu</span> —  
-        turma <span>Engenharia Elétrica 10N</span>.
+        Desenvolvido na <span>Faculdade Unibr Botucatu</span> — turma
+        <span>Engenharia Elétrica 10N</span>.
       </p>
 
       <button class="btn-primary"
@@ -407,30 +350,26 @@ footer b{
 
     </div>
 
-    <!-- CARD LATERAL -->
-    <div class="hero-visual">
-      <div class="hero-card">
-
-        <div class="hero-card-header">
-          <div class="hero-pill">Lei de Coulomb</div>
-          <span>Campo elétrico & cargas</span>
-        </div>
-
-        <div class="hero-card-title">Interação entre cargas elétricas</div>
-
-        <div class="hero-card-field">
-          Capítulo 1
-          <span>Conceitos básicos • Força elétrica • Exemplos práticos</span>
-        </div>
-
-        <div class="hero-orbits"></div>
-        <div class="hero-orbits2"></div>
-
-        <!-- CARGAS FORA DO CARD -->
-        <div class="hero-charge float-plus">+</div>
-        <div class="hero-charge float-minus">−</div>
-
+    <!-- CARTÃO -->
+    <div class="hero-card">
+      <div class="hero-card-header">
+        <div class="hero-pill">Lei de Coulomb</div>
+        <span>Campo elétrico & cargas</span>
       </div>
+
+      <div class="hero-card-title">Interação entre cargas elétricas</div>
+
+      <div class="hero-card-field">
+        Capítulo 1
+        <span>Conceitos básicos • Força elétrica • Exemplos práticos</span>
+      </div>
+
+      <div class="hero-orbits"></div>
+      <div class="hero-orbits2"></div>
+
+      <div class="hero-charge float-plus">+</div>
+      <div class="hero-charge float-minus">−</div>
+
     </div>
 
   </div>
@@ -440,10 +379,8 @@ footer b{
 <section id="leitura" class="section reveal">
   <div class="pdf-box">
     <h2>Visualização do PDF</h2>
-    <p style="color:#9db6d8;margin-bottom:20px;">
-      E-book Eletromagnetismo — Lei de Coulomb e Campo Elétrico
-    </p>
-
+    <p style="color:#9db6d8;">E-book Eletromagnetismo — Lei de Coulomb e Campo Elétrico</p>
+    
     <iframe src="pdf/ebook.pdf"></iframe>
   </div>
 </section>
@@ -474,11 +411,24 @@ document.addEventListener("mousemove", e => {
 ScrollReveal().reveal('.reveal',{
   duration:1200,
   distance:'60px',
-  easing:'ease-out',
   origin:'bottom',
   interval:160,
   opacity:0
 });
+</script>
+
+<!-- PARTÍCULAS -->
+<script>
+const container = document.getElementById("particles");
+for(let i=0;i<60;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"%";
+  p.style.top=Math.random()*100+"%";
+  p.style.animationDuration=(6+Math.random()*8)+"s";
+  p.style.animationDelay=(Math.random()*5)+"s";
+  container.appendChild(p);
+}
 </script>
 
 </body>
