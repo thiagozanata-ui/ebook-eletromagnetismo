@@ -79,12 +79,6 @@ body::before{
   animation:fieldFlow 18s linear infinite;
 }
 
-.field-line.line1{ top:20%; left:-80%; transform:rotate(-18deg); }
-.field-line.line2{ top:40%; left:-90%; transform:rotate(-8deg); }
-.field-line.line3{ top:60%; left:-70%; transform:rotate(6deg); }
-.field-line.line4{ top:75%; left:-85%; transform:rotate(16deg); opacity:.28; }
-.field-line.line5{ top:32%; left:-60%; transform:rotate(12deg); opacity:.32; }
-
 @keyframes fieldFlow{
   0%{ transform:translateX(0); }
   100%{ transform:translateX(40%); }
@@ -116,46 +110,72 @@ body::before{
 }
 
 /* ============================================================
-   HERO
+   TÍTULO CENTRAL
 ============================================================ */
-.hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:140px 20px 80px;
-}
-
-.hero-inner{
+.main-title{
   width:100%;
-  max-width:1250px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:60px;
-}
-
-.hero-content{ max-width:560px; }
-
-.hero-title{
-  font-size:clamp(2.7rem,4vw,3.8rem);
-  font-weight:700;
-  margin-bottom:12px;
-}
-
-.hero-highlight{
+  text-align:center;
+  margin-top:60px;
+  font-size:3rem;
+  font-weight:800;
+  letter-spacing:-.03em;
   background:linear-gradient(to right,#93c5fd,#e5e7eb);
   -webkit-background-clip:text;
   color:transparent;
 }
 
 /* ============================================================
-   CATÁLOGO DE PDF
+   BOTÃO CATÁLOGO
 ============================================================ */
+.catalog-btn{
+  margin:25px auto;
+  display:block;
+  padding:14px 45px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(135deg,#2563eb,#38bdf8);
+  color:white;
+  font-size:1.05rem;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 15px 40px rgba(0,0,0,0.55);
+  transition:.25s;
+  backdrop-filter:blur(18px);
+}
+
+.catalog-btn:hover{
+  transform:translateY(-4px);
+}
+
+/* Parallax */
+[data-depth-btn]{
+  transition:transform .1s linear;
+}
+
+/* ============================================================
+   CATÁLOGO
+============================================================ */
+.catalog-wrapper{
+  margin-top:80px;
+}
+
+.catalog-title{
+  text-align:center;
+  font-size:1.8rem;
+  margin-bottom:10px;
+}
+
+.catalog-sub{
+  margin-top:8px;
+  text-align:center;
+  color:#9db6d8;
+  margin-bottom:40px;
+  font-size:1rem;
+}
 
 .catalog-container{
   max-width:1300px;
-  margin:50px auto;
+  margin:0 auto;
   padding:20px;
   display:flex;
   flex-wrap:wrap;
@@ -172,20 +192,19 @@ body::before{
   padding:16px;
   box-shadow:0 0 50px rgba(0,0,0,0.7);
   cursor:pointer;
-  transition:.25s;
   position:relative;
+  transition:.3s;
 }
 
 .catalog-card:hover{
   transform:translateY(-6px);
-  box-shadow:0 0 70px rgba(56,189,248,0.5);
+  box-shadow:0 0 60px rgba(56,189,248,0.5);
 }
 
 .pdf-thumb{
   width:100%;
   height:180px;
   border-radius:14px;
-  background:#000;
   background-size:cover;
   background-position:center;
   border:1px solid rgba(120,160,255,0.4);
@@ -205,6 +224,7 @@ body::before{
   align-items:center;
   justify-content:center;
   box-shadow:0 0 16px rgba(56,189,248,0.55);
+  z-index:99;
 }
 
 .magnify-icon svg{
@@ -213,9 +233,8 @@ body::before{
 }
 
 /* ============================================================
-   POP-UP MODAL PDF
+   MODAL PDF
 ============================================================ */
-
 .modal-bg{
   position:fixed;
   inset:0;
@@ -248,7 +267,7 @@ body::before{
 
 .modal-close{
   position:absolute;
-  top:-50px;
+  top:-55px;
   right:0;
   font-size:22px;
   background:#2563eb;
@@ -264,70 +283,88 @@ body::before{
   filter:brightness(1.2);
 }
 
+/* ============================================================
+   SOBRE NÓS
+============================================================ */
+footer{
+  margin-top:120px;
+  padding:30px;
+  text-align:center;
+  color:#a8b4ce;
+}
+
+footer h2{
+  margin-bottom:15px;
+  color:#dbeafe;
+}
+
+footer p{
+  line-height:1.6;
+}
+
 </style>
 </head>
 <body>
 
 <div class="apple-bg"></div>
 
-<!-- CAMPO -->
+<!-- EFEITOS -->
 <div class="field-layer">
-  <div class="field-line line1"></div>
-  <div class="field-line line2"></div>
-  <div class="field-line line3"></div>
-  <div class="field-line line4"></div>
-  <div class="field-line line5"></div>
+  <div class="field-line" style="top:20%;"></div>
+  <div class="field-line" style="top:40%;"></div>
+  <div class="field-line" style="top:60%;"></div>
 </div>
 
-<!-- PARTÍCULAS -->
 <div class="particle-layer" id="particles"></div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
+<!-- TÍTULO -->
+<h1 class="main-title" data-depth="0.15">E-book Eletromagnetismo</h1>
 
-    <div class="hero-content" data-depth="0.35">
-      <h1 class="hero-title">E-book <span class="hero-highlight">Eletromagnetismo</span></h1>
-      <p class="hero-sub">Lei de Coulomb e Campo Elétrico aplicada à Engenharia Elétrica.</p>
-      <button class="btn-primary"
-        onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});">
-        Ver Catálogo
-      </button>
-    </div>
+<!-- BOTÃO CATÁLOGO -->
+<button class="catalog-btn" data-depth-btn onclick="document.getElementById('catalog-wrapper').scrollIntoView({behavior:'smooth'});">
+  Ver Catálogo
+</button>
 
-  </div>
-</section>
+<!-- CATÁLOGO -->
+<section class="catalog-wrapper" id="catalog-wrapper">
 
-<!-- ============================================================
-     CATÁLOGO DE ITENS (PDF PREVIEW)
-============================================================ -->
-<section id="catalogo">
-  <h2 style="text-align:center;margin-bottom:25px;font-size:2rem;">Catálogo de Conteúdo</h2>
+  <h2 class="catalog-title">Catálogo de Conteúdo</h2>
+  <p class="catalog-sub">Selecione o material que deseja visualizar</p>
 
   <div class="catalog-container">
 
-    <!-- CARD DO PDF -->
-    <div class="catalog-card" onclick="openPDF()">
+    <!-- CARD 1 -->
+    <div class="catalog-card" onclick="openPDF('pdf/ebook1.pdf')">
 
       <div class="magnify-icon">
         <svg viewBox="0 0 24 24">
-          <path d="M15.5 14h-.79l-.28-.27a6.471 
-              6.471 0 001.48-5.34C15.18 5.01 12.4 2.5 
-              9 2.5S2.82 5.01 2.09 8.39c-.73 3.38 1.3 
-              6.72 4.48 7.79 2.05.68 4.26.25 
-              5.89-1.05l.27.28v.79l4.25 
-              4.25c.41.41 1.08.41 1.49 
-              0 .41-.41.41-1.08 0-1.49L15.5 14zm-6.5 
-              0C6.01 14 4 11.99 4 9.5S6.01 5 8.5 
-              5 13 7.01 13 9.5 10.99 14 8.5 14z"/>
+          <path d="M15.5 14h-.79l-.28-.27a6.4 6.4 0 10-..."></path>
         </svg>
       </div>
 
-      <div class="pdf-thumb" style="background-image:url('pdf/preview.jpg');"></div>
+      <div class="pdf-thumb" style="background-image:url('pdf/preview1.jpg')"></div>
 
-      <h3 style="margin-bottom:6px;">Lei de Coulomb — Capítulo Completo</h3>
+      <h3>Lei de Coulomb — E-book 1</h3>
       <p style="color:var(--text-muted); font-size:.9rem;">
-        PDF completo do E-book incluindo campo elétrico, forças e aplicações reais.
+        Conteúdo completo sobre força elétrica e interações entre cargas.
+      </p>
+
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="catalog-card" onclick="openPDF('pdf/ebook2.pdf')">
+
+      <div class="magnify-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27a6.4 6.4 0 10-..."></path>
+        </svg>
+      </div>
+
+      <div class="pdf-thumb" style="background-image:url('pdf/preview2.jpg')"></div>
+
+      <h3>Campo Elétrico — E-book 2</h3>
+      <p style="color:var(--text-muted); font-size:.9rem;">
+        Conceitos fundamentais do campo elétrico e suas propriedades.
       </p>
 
     </div>
@@ -335,51 +372,44 @@ body::before{
   </div>
 </section>
 
-<!-- ============================================================
-     POP-UP DO PDF
-============================================================ -->
+<!-- MODAL PDF -->
 <div class="modal-bg" id="modalBg"></div>
-
 <div class="modal" id="modalPDF">
-  <iframe src="pdf/ebook.pdf"></iframe>
+  <iframe id="pdfFrame"></iframe>
   <div class="modal-close" onclick="closePDF()">Fechar</div>
 </div>
 
+<!-- SOBRE NÓS -->
+<footer>
+  <h2>Sobre nós</h2>
+  <p>
+    Thiago Zanata<br>
+    Vitor dos Santos<br>
+    Wellington Ramires<br>
+    Kauan Ribeiro<br>
+    Luan Correia<br>
+    Felipe Brazil<br>
+    João Magalhães<br>
+    Marcos Vinicius<br>
+    Murilo Vendramini<br>
+    Thailisson Henrique<br><br>
 
-<!-- FOOTER -->
-<footer class="reveal">
-  Thiago Santos Zanata<br>
-  Vitor Aparecido dos Santos<br>
-  Wellington Ramires
-  <b>Dr. Guilherme Augusto Marabezzi Clerice</b>
+    <strong>Orientador: Dr. Guilherme Augusto Marabezzi Clerice</strong>
+  </p>
 </footer>
 
-
-<!-- PARALLAX -->
+<!-- SCRIPT: PARALLAX BOTÃO -->
 <script>
 document.addEventListener("mousemove", e => {
-  const x = (window.innerWidth/2 - e.clientX)/40;
-  const y = (window.innerHeight/2 - e.clientY)/40;
+  const x = (window.innerWidth/2 - e.clientX)/60;
 
-  document.querySelectorAll("[data-depth]").forEach(el=>{
-    const d = parseFloat(el.getAttribute("data-depth") || "0");
-    el.style.transform = `translate(${x*d}px, ${y*d}px)`;
+  document.querySelectorAll("[data-depth-btn]").forEach(el=>{
+    el.style.transform = `translateX(${x}px)`;
   });
 });
 </script>
 
-<!-- ScrollReveal -->
-<script>
-ScrollReveal().reveal('.reveal',{
-  duration:1200,
-  distance:'60px',
-  origin:'bottom',
-  interval:160,
-  opacity:0
-});
-</script>
-
-<!-- Partículas -->
+<!-- PARTICLE SCRIPT -->
 <script>
 const container = document.getElementById("particles");
 for(let i=0;i<60;i++){
@@ -393,15 +423,17 @@ for(let i=0;i<60;i++){
 }
 </script>
 
-<!-- MODAL DO PDF -->
+<!-- MODAL SCRIPT -->
 <script>
-function openPDF(){
+function openPDF(path){
   document.getElementById("modalBg").style.display="block";
   document.getElementById("modalPDF").style.display="block";
+  document.getElementById("pdfFrame").src = path;
 }
 function closePDF(){
   document.getElementById("modalBg").style.display="none";
   document.getElementById("modalPDF").style.display="none";
+  document.getElementById("pdfFrame").src="";
 }
 </script>
 
