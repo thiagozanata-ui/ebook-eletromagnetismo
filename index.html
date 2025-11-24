@@ -6,7 +6,7 @@
 <title>E-book Eletromagnetismo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- ScrollReveal -->
+<!-- ScrollReveal (para animações suaves de entrada) -->
 <script src="https://unpkg.com/scrollreveal"></script>
 
 <style>
@@ -14,25 +14,80 @@
    VARIÁVEIS / RESET
 ============================================================ */
 :root{
-  --bg:#050814;
+  --bg:#020617;
   --accent:#2563eb;
   --accent-soft:#dbeafe;
   --text-main:#f1f5f9;
   --text-muted:#94a3b8;
   --glass-bg:rgba(15,23,42,0.45);
+  --shadow-strong:0 25px 60px rgba(0,0,0,0.8);
+  --shadow-neon:0 0 40px rgba(56,189,248,0.7);
+}
+
+body.light-theme{
+  --bg:#f1f5f9;
+  --accent:#1d4ed8;
+  --accent-soft:#1d4ed8;
+  --text-main:#020617;
+  --text-muted:#475569;
+  --glass-bg:rgba(255,255,255,0.8);
+  --shadow-strong:0 20px 40px rgba(148,163,184,0.6);
+  --shadow-neon:0 0 26px rgba(59,130,246,0.6);
 }
 
 *{ box-sizing:border-box; margin:0; padding:0; }
 
 body{
   font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#020617;
+  background:var(--bg);
   color:var(--text-main);
   overflow-x:hidden;
 }
 
 /* ============================================================
-   FUNDO BLUR
+   LOADING
+============================================================ */
+.loader{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at top,#020617,#000);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:9999999;
+  transition:opacity .4s ease;
+}
+
+.loader.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+.loader-spinner{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:4px solid rgba(148,163,184,0.3);
+  border-top-color:#38bdf8;
+  animation:spin 1s linear infinite;
+  margin-bottom:18px;
+}
+
+.loader-text{
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-size:.8rem;
+  color:#e5e7eb;
+}
+
+@keyframes spin{
+  to{ transform:rotate(360deg); }
+}
+
+/* ============================================================
+   FUNDO BLUR / LINHAS / PARTÍCULAS
 ============================================================ */
 .apple-bg{
   position:fixed;
@@ -54,13 +109,10 @@ body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:radial-gradient(circle at top,#020617cc 0,#020617 55%);
+  background:radial-gradient(circle at top,#020617cc 0,var(--bg) 55%);
   z-index:-3;
 }
 
-/* ============================================================
-   CAMPO ELÉTRICO
-============================================================ */
 .field-layer{
   position:fixed;
   inset:0;
@@ -79,14 +131,15 @@ body::before{
   animation:fieldFlow 18s linear infinite;
 }
 
+.field-line.line1{ top:25%; left:-90%; transform:rotate(-14deg); }
+.field-line.line2{ top:48%; left:-80%; transform:rotate(-4deg); }
+.field-line.line3{ top:70%; left:-70%; transform:rotate(10deg); }
+
 @keyframes fieldFlow{
   0%{ transform:translateX(0); }
   100%{ transform:translateX(40%); }
 }
 
-/* ============================================================
-   PARTÍCULAS
-============================================================ */
 .particle-layer{
   position:fixed;
   inset:0;
@@ -110,25 +163,96 @@ body::before{
 }
 
 /* ============================================================
-   TÍTULO CENTRAL
+   TOPO: TEMA + NAV
 ============================================================ */
-.main-title{
-  width:100%;
-  text-align:center;
-  margin-top:60px;
-  font-size:3rem;
-  font-weight:800;
-  letter-spacing:-.03em;
-  background:linear-gradient(to right,#93c5fd,#e5e7eb);
-  -webkit-background-clip:text;
-  color:transparent;
+.top-bar{
+  position:fixed;
+  top:14px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(1100px,100% - 32px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:100;
+}
+
+.nav-links{
+  display:flex;
+  gap:14px;
+  font-size:.88rem;
+}
+
+.nav-links a{
+  color:var(--text-muted);
+  text-decoration:none;
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(15,23,42,.7);
+  border:1px solid rgba(148,163,184,0.4);
+  backdrop-filter:blur(14px);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.nav-links a:hover{
+  color:#e5e7eb;
+  border-color:#38bdf8;
+}
+
+.theme-toggle{
+  padding:6px 14px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.7);
+  background:rgba(15,23,42,0.8);
+  color:#e5e7eb;
+  font-size:.8rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  backdrop-filter:blur(18px);
 }
 
 /* ============================================================
-   BOTÃO CATÁLOGO
+   TÍTULO COM EFEITO
 ============================================================ */
+.main-header{
+  padding-top:90px;
+  text-align:center;
+  position:relative;
+}
+
+.main-title{
+  margin-top:40px;
+  font-size:3.1rem;
+  font-weight:800;
+  letter-spacing:-.04em;
+  background:linear-gradient(to right,#93c5fd,#e5e7eb);
+  -webkit-background-clip:text;
+  color:transparent;
+  position:relative;
+  display:inline-block;
+}
+
+.main-title::after{
+  content:"";
+  position:absolute;
+  inset:100% 10% auto;
+  height:3px;
+  background:linear-gradient(90deg,transparent,#38bdf8,#e5e7eb,#38bdf8,transparent);
+  box-shadow:0 0 20px rgba(56,189,248,0.9);
+  animation:energyLine 2.8s ease-in-out infinite;
+}
+
+@keyframes energyLine{
+  0%,100%{ opacity:.1; transform:scaleX(.4); }
+  50%{ opacity:1; transform:scaleX(1); }
+}
+
+/* botão catálogo */
 .catalog-btn{
-  margin:25px auto;
+  margin:28px auto 0;
   display:block;
   padding:14px 45px;
   border-radius:999px;
@@ -138,16 +262,16 @@ body::before{
   font-size:1.05rem;
   font-weight:700;
   cursor:pointer;
-  box-shadow:0 15px 40px rgba(0,0,0,0.55);
+  box-shadow:var(--shadow-strong);
   transition:.25s;
   backdrop-filter:blur(18px);
 }
 
 .catalog-btn:hover{
-  transform:translateY(-4px);
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:var(--shadow-neon);
 }
 
-/* Parallax */
 [data-depth-btn]{
   transition:transform .1s linear;
 }
@@ -168,7 +292,7 @@ body::before{
 .catalog-sub{
   margin-top:8px;
   text-align:center;
-  color:#9db6d8;
+  color:var(--text-muted);
   margin-bottom:40px;
   font-size:1rem;
 }
@@ -187,20 +311,45 @@ body::before{
   width:280px;
   background:var(--glass-bg);
   backdrop-filter:blur(20px);
-  border:1px solid rgba(200,220,255,0.4);
+  border:1px solid rgba(200,220,255,0.45);
   border-radius:20px;
   padding:16px;
-  box-shadow:0 0 50px rgba(0,0,0,0.7);
+  box-shadow:var(--shadow-strong);
   cursor:pointer;
   position:relative;
-  transition:.3s;
+  transition:.25s;
+  overflow:hidden;
 }
 
 .catalog-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 0 60px rgba(56,189,248,0.5);
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:var(--shadow-neon);
+  border-color:#38bdf8;
 }
 
+.catalog-card.add-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border-style:dashed;
+}
+
+.add-plus{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:2px dashed #38bdf8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  margin-bottom:10px;
+  color:#38bdf8;
+}
+
+/* preview */
 .pdf-thumb{
   width:100%;
   height:180px;
@@ -211,7 +360,7 @@ body::before{
   margin-bottom:12px;
 }
 
-/* ÍCONE LUPA */
+/* lupa */
 .magnify-icon{
   position:absolute;
   top:14px;
@@ -224,12 +373,31 @@ body::before{
   align-items:center;
   justify-content:center;
   box-shadow:0 0 16px rgba(56,189,248,0.55);
-  z-index:99;
+  z-index:2;
 }
 
 .magnify-icon svg{
   width:22px;
   fill:white;
+}
+
+/* botão download */
+.download-btn{
+  margin-top:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,0.7);
+  background:rgba(15,23,42,0.8);
+  color:var(--text-main);
+  font-size:.8rem;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.download-btn span{
+  font-size:1.1rem;
 }
 
 /* ============================================================
@@ -251,7 +419,7 @@ body::before{
   transform:translate(-50%,-50%);
   width:90%;
   height:90%;
-  background:#020617;
+  background:var(--bg);
   border-radius:18px;
   z-index:999999;
   display:none;
@@ -284,158 +452,92 @@ body::before{
 }
 
 /* ============================================================
-   SOBRE NÓS
+   MODAL ADMIN
 ============================================================ */
-footer{
-  margin-top:120px;
-  padding:30px;
-  text-align:center;
-  color:#a8b4ce;
+.admin-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,0.8);
+  backdrop-filter:blur(8px);
+  display:none;
+  z-index:99990;
 }
 
-footer h2{
-  margin-bottom:15px;
-  color:#dbeafe;
+.admin-modal{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:min(420px,95%);
+  background:var(--glass-bg);
+  border-radius:18px;
+  padding:22px 20px;
+  border:1px solid rgba(191,219,254,0.7);
+  box-shadow:var(--shadow-strong);
+  display:none;
+  z-index:99991;
 }
 
-footer p{
-  line-height:1.6;
+.admin-modal h3{
+  margin-bottom:10px;
 }
 
-</style>
-</head>
-<body>
-
-<div class="apple-bg"></div>
-
-<!-- EFEITOS -->
-<div class="field-layer">
-  <div class="field-line" style="top:20%;"></div>
-  <div class="field-line" style="top:40%;"></div>
-  <div class="field-line" style="top:60%;"></div>
-</div>
-
-<div class="particle-layer" id="particles"></div>
-
-<!-- TÍTULO -->
-<h1 class="main-title" data-depth="0.15">E-book Eletromagnetismo</h1>
-
-<!-- BOTÃO CATÁLOGO -->
-<button class="catalog-btn" data-depth-btn onclick="document.getElementById('catalog-wrapper').scrollIntoView({behavior:'smooth'});">
-  Ver Catálogo
-</button>
-
-<!-- CATÁLOGO -->
-<section class="catalog-wrapper" id="catalog-wrapper">
-
-  <h2 class="catalog-title">Catálogo de Conteúdo</h2>
-  <p class="catalog-sub">Selecione o material que deseja visualizar</p>
-
-  <div class="catalog-container">
-
-    <!-- CARD 1 -->
-    <div class="catalog-card" onclick="openPDF('pdf/ebook1.pdf')">
-
-      <div class="magnify-icon">
-        <svg viewBox="0 0 24 24">
-          <path d="M15.5 14h-.79l-.28-.27a6.4 6.4 0 10-..."></path>
-        </svg>
-      </div>
-
-      <div class="pdf-thumb" style="background-image:url('pdf/preview1.jpg')"></div>
-
-      <h3>Lei de Coulomb — E-book 1</h3>
-      <p style="color:var(--text-muted); font-size:.9rem;">
-        Conteúdo completo sobre força elétrica e interações entre cargas.
-      </p>
-
-    </div>
-
-    <!-- CARD 2 -->
-    <div class="catalog-card" onclick="openPDF('pdf/ebook2.pdf')">
-
-      <div class="magnify-icon">
-        <svg viewBox="0 0 24 24">
-          <path d="M15.5 14h-.79l-.28-.27a6.4 6.4 0 10-..."></path>
-        </svg>
-      </div>
-
-      <div class="pdf-thumb" style="background-image:url('pdf/preview2.jpg')"></div>
-
-      <h3>Campo Elétrico — E-book 2</h3>
-      <p style="color:var(--text-muted); font-size:.9rem;">
-        Conceitos fundamentais do campo elétrico e suas propriedades.
-      </p>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- MODAL PDF -->
-<div class="modal-bg" id="modalBg"></div>
-<div class="modal" id="modalPDF">
-  <iframe id="pdfFrame"></iframe>
-  <div class="modal-close" onclick="closePDF()">Fechar</div>
-</div>
-
-<!-- SOBRE NÓS -->
-<footer>
-  <h2>Sobre nós</h2>
-  <p>
-    Thiago Zanata<br>
-    Vitor dos Santos<br>
-    Wellington Ramires<br>
-    Kauan Ribeiro<br>
-    Luan Correia<br>
-    Felipe Brazil<br>
-    João Magalhães<br>
-    Marcos Vinicius<br>
-    Murilo Vendramini<br>
-    Thailisson Henrique<br><br>
-
-    <strong>Orientador: Dr. Guilherme Augusto Marabezzi Clerice</strong>
-  </p>
-</footer>
-
-<!-- SCRIPT: PARALLAX BOTÃO -->
-<script>
-document.addEventListener("mousemove", e => {
-  const x = (window.innerWidth/2 - e.clientX)/60;
-
-  document.querySelectorAll("[data-depth-btn]").forEach(el=>{
-    el.style.transform = `translateX(${x}px)`;
-  });
-});
-</script>
-
-<!-- PARTICLE SCRIPT -->
-<script>
-const container = document.getElementById("particles");
-for(let i=0;i<60;i++){
-  let p=document.createElement("div");
-  p.className="particle";
-  p.style.left=Math.random()*100+"%";
-  p.style.top=Math.random()*100+"%";
-  p.style.animationDuration=(6+Math.random()*8)+"s";
-  p.style.animationDelay=(Math.random()*5)+"s";
-  container.appendChild(p);
+.admin-modal label{
+  display:block;
+  font-size:.8rem;
+  color:var(--text-muted);
+  margin-top:8px;
 }
-</script>
 
-<!-- MODAL SCRIPT -->
-<script>
-function openPDF(path){
-  document.getElementById("modalBg").style.display="block";
-  document.getElementById("modalPDF").style.display="block";
-  document.getElementById("pdfFrame").src = path;
+.admin-modal input,
+.admin-modal textarea{
+  width:100%;
+  margin-top:4px;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(148,163,184,0.7);
+  background:rgba(15,23,42,0.8);
+  color:var(--text-main);
+  font-size:.85rem;
 }
-function closePDF(){
-  document.getElementById("modalBg").style.display="none";
-  document.getElementById("modalPDF").style.display="none";
-  document.getElementById("pdfFrame").src="";
-}
-</script>
 
-</body>
-</html>
+.admin-actions{
+  margin-top:16px;
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+}
+
+.admin-actions button{
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-size:.8rem;
+}
+
+.btn-secondary{
+  background:rgba(15,23,42,0.9);
+  color:var(--text-main);
+  border:1px solid rgba(148,163,184,.7);
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#2563eb,#38bdf8);
+  color:white;
+}
+
+/* botão admin flutuante */
+.admin-fab{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#2563eb,#38bdf8);
+  color:white;
+  border:none;
+  cursor:pointer;
+  box-shadow:var(--shadow-neon);
+  display:fle
