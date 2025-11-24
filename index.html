@@ -540,7 +540,7 @@ body::before{
   border:none;
   cursor:pointer;
   box-shadow:var(--shadow-neon);
-  display:flex;
+  display:none; /* começa escondido */
   align-items:center;
   justify-content:center;
   font-size:1.3rem;
@@ -696,8 +696,8 @@ footer{
   </div>
 </div>
 
-<!-- BOTÃO ADMIN FLUTUANTE -->
-<button class="admin-fab" onclick="openAdminPanel()" title="Admin">
+<!-- BOTÃO ADMIN FLUTUANTE (só aparece no modo admin + senha) -->
+<button class="admin-fab" id="adminFab" onclick="openAdminPanel()" title="Admin">
   +
 </button>
 
@@ -799,6 +799,20 @@ function closePDF(){
   document.getElementById("pdfFrame").src="";
 }
 
+// ==========================
+// MODO ADMIN (link + senha)
+// ==========================
+let adminMode = false;     // ativado só se ?painel=admin
+let adminAuthed = false;   // ativado só se senha correta
+const ADMIN_PASSWORD = "thiagoadmin5959";
+
+(function detectAdminMode(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('painel') === 'admin'){
+    adminMode = true;
+  }
+})();
+
 // CATÁLOGO (dinâmico, com localStorage)
 const defaultCatalog = [
   {
@@ -856,19 +870,21 @@ function renderCatalog(){
     container.appendChild(card);
   });
 
-  // Card de adicionar novo
-  const addCard = document.createElement('div');
-  addCard.className = 'catalog-card add-card';
-  addCard.innerHTML = `
-    <div class="add-plus">+</div>
-    <div style="font-size:.9rem;color:var(--text-muted);">
-      Adicionar novo PDF<br><small>(Admin)</small>
-    </div>
-  `;
-  addCard.addEventListener('click', openAdminPanel);
-  container.appendChild(addCard);
+  // Card de adicionar novo (APENAS SE adminMode + adminAuthed)
+  if(adminMode && adminAuthed){
+    const addCard = document.createElement('div');
+    addCard.className = 'catalog-card add-card';
+    addCard.innerHTML = `
+      <div class="add-plus">+</div>
+      <div style="font-size:.9rem;color:var(--text-muted);">
+        Adicionar novo PDF<br><small>(Admin)</small>
+      </div>
+    `;
+    addCard.addEventListener('click', openAdminPanel);
+    container.appendChild(addCard);
+  }
 
-  // Eventos de download (parar propagação)
+  // Eventos de download (interrompendo clique do card)
   container.querySelectorAll('.download-btn').forEach(btn=>{
     btn.addEventListener('click', e=>{
       e.stopPropagation();
@@ -878,11 +894,14 @@ function renderCatalog(){
   });
 }
 
-// ADMIN
-let adminAuthed = false;
-const ADMIN_PASSWORD = "admin123"; // você pode mudar aqui
+// ADMIN MODAL
+const adminBg = document.getElementById('adminBg');
+const adminModal = document.getElementById('adminModal');
+const adminFab = document.getElementById('adminFab');
 
 function openAdminPanel(){
+  if(!adminMode) return;
+
   if(!adminAuthed){
     const pass = prompt("Senha de admin:");
     if(pass !== ADMIN_PASSWORD){
@@ -890,9 +909,13 @@ function openAdminPanel(){
       return;
     }
     adminAuthed = true;
+    // Mostra botão admin e card de adicionar
+    adminFab.style.display = 'flex';
+    renderCatalog();
   }
-  document.getElementById('adminBg').style.display = 'block';
-  document.getElementById('adminModal').style.display = 'block';
+
+  adminBg.style.display = 'block';
+  adminModal.style.display = 'block';
 
   // limpa campos
   document.getElementById('adminTitle').value = "";
@@ -901,10 +924,10 @@ function openAdminPanel(){
   document.getElementById('adminThumb').value = "";
 }
 
-document.getElementById('adminBg').addEventListener('click', closeAdminPanel);
+adminBg.addEventListener('click', closeAdminPanel);
 function closeAdminPanel(){
-  document.getElementById('adminBg').style.display = 'none';
-  document.getElementById('adminModal').style.display = 'none';
+  adminBg.style.display = 'none';
+  adminModal.style.display = 'none';
 }
 
 function saveCatalogItem(){
@@ -947,6 +970,18 @@ ScrollReveal().reveal('.reveal',{
 
 // INICIALIZA
 loadCatalog();
+
+// Se estiver em modo admin, já dispara a tela de senha
+if(adminMode){
+  // não mostra o botão até senha correta
+  adminFab.style.display = 'none';
+  setTimeout(()=>{
+    openAdminPanel();
+  }, 600);
+} else {
+  // visitantes comuns nunca veem admin
+  adminFab.style.display = 'none';
+}
 
 </script>
 </body>
