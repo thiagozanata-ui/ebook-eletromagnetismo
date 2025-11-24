@@ -540,4 +540,414 @@ body::before{
   border:none;
   cursor:pointer;
   box-shadow:var(--shadow-neon);
-  display:fle
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.3rem;
+  z-index:50;
+}
+
+/* ============================================================
+   SOBRE NÓS
+============================================================ */
+.sobre-wrapper{
+  margin-top:110px;
+  padding:40px 20px 80px;
+  max-width:1100px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.sobre-wrapper h2{
+  text-align:center;
+  font-size:2rem;
+  margin-bottom:10px;
+}
+
+.sobre-wrapper p.desc{
+  text-align:center;
+  color:var(--text-muted);
+  margin-bottom:30px;
+}
+
+.sobre-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
+}
+
+.sobre-card{
+  background:var(--glass-bg);
+  border-radius:18px;
+  padding:14px 12px;
+  border:1px solid rgba(191,219,254,0.7);
+  text-align:center;
+  font-size:.9rem;
+}
+
+.sobre-orientador{
+  margin-top:26px;
+  text-align:center;
+  font-weight:600;
+}
+
+/* rodapé simples */
+footer{
+  padding:18px;
+  text-align:center;
+  font-size:.78rem;
+  color:var(--text-muted);
+}
+
+/* ============================================================
+   RESPONSIVO
+============================================================ */
+@media (max-width:600px){
+  .main-title{
+    font-size:2.3rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loader" id="loader">
+  <div class="loader-spinner"></div>
+  <div class="loader-text">carregando e-book...</div>
+</div>
+
+<div class="apple-bg"></div>
+
+<div class="field-layer">
+  <div class="field-line line1"></div>
+  <div class="field-line line2"></div>
+  <div class="field-line line3"></div>
+</div>
+
+<div class="particle-layer" id="particles"></div>
+
+<!-- TOPO: NAV + TEMA -->
+<div class="top-bar">
+  <div class="nav-links">
+    <a onclick="scrollToId('catalog-wrapper')">Catálogo</a>
+    <a onclick="scrollToId('sobre-nos')">Sobre nós</a>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle">
+    <span id="themeIcon">🌙</span> Tema
+  </button>
+</div>
+
+<!-- HEADER / TÍTULO -->
+<header class="main-header reveal">
+  <h1 class="main-title">E-book Eletromagnetismo</h1>
+
+  <button class="catalog-btn" data-depth-btn
+    onclick="scrollToId('catalog-wrapper')">
+    Ver catálogo
+  </button>
+</header>
+
+<!-- CATÁLOGO -->
+<section class="catalog-wrapper reveal" id="catalog-wrapper">
+
+  <h2 class="catalog-title">Catálogo de Conteúdo</h2>
+  <!-- Você pode mudar esse texto livremente -->
+  <p class="catalog-sub" id="catalogSubtitle">
+    Escolha o material de Eletromagnetismo que deseja visualizar.
+  </p>
+
+  <div class="catalog-container" id="catalogContainer">
+    <!-- Cards são gerados via JavaScript -->
+  </div>
+</section>
+
+<!-- MODAL PDF -->
+<div class="modal-bg" id="modalBg"></div>
+<div class="modal" id="modalPDF">
+  <iframe id="pdfFrame"></iframe>
+  <div class="modal-close" onclick="closePDF()">Fechar</div>
+</div>
+
+<!-- MODAL ADMIN -->
+<div class="admin-bg" id="adminBg"></div>
+<div class="admin-modal" id="adminModal">
+  <h3>Adicionar/Editar item do catálogo</h3>
+  <p style="font-size:.78rem;color:var(--text-muted);">
+    Preencha os campos abaixo para adicionar um novo PDF ao catálogo.
+  </p>
+
+  <label>Título</label>
+  <input type="text" id="adminTitle" placeholder="Ex: Lei de Gauss — E-book 3">
+
+  <label>Descrição</label>
+  <textarea id="adminDesc" rows="3" placeholder="Breve descrição do conteúdo"></textarea>
+
+  <label>Caminho do PDF</label>
+  <input type="text" id="adminPdf" placeholder="Ex: pdf/ebook3.pdf">
+
+  <label>Caminho da imagem de preview</label>
+  <input type="text" id="adminThumb" placeholder="Ex: pdf/preview3.jpg">
+
+  <div class="admin-actions">
+    <button class="btn-secondary" onclick="resetCatalog()">Resetar catálogo</button>
+    <button class="btn-primary" onclick="saveCatalogItem()">Salvar</button>
+  </div>
+</div>
+
+<!-- BOTÃO ADMIN FLUTUANTE -->
+<button class="admin-fab" onclick="openAdminPanel()" title="Admin">
+  +
+</button>
+
+<!-- SOBRE NÓS -->
+<section class="sobre-wrapper reveal" id="sobre-nos">
+  <h2>Sobre nós</h2>
+  <p class="desc">
+    Projeto desenvolvido pela turma de Engenharia Elétrica da Faculdade Unibr Botucatu.
+  </p>
+
+  <div class="sobre-grid">
+    <div class="sobre-card">Thiago Zanata</div>
+    <div class="sobre-card">Vitor dos Santos</div>
+    <div class="sobre-card">Wellington Ramires</div>
+    <div class="sobre-card">Kauan Ribeiro</div>
+    <div class="sobre-card">Luan Correia</div>
+    <div class="sobre-card">Felipe Brazil</div>
+    <div class="sobre-card">João Magalhães</div>
+    <div class="sobre-card">Marcos Vinicius</div>
+    <div class="sobre-card">Murilo Vendramini</div>
+    <div class="sobre-card">Thailisson Henrique</div>
+  </div>
+
+  <p class="sobre-orientador">
+    Orientador: Dr. Guilherme Augusto Marabezzi Clerice
+  </p>
+</section>
+
+<footer>
+  © 2025 — E-book Eletromagnetismo
+</footer>
+
+<!-- ============================================================
+   SCRIPTS
+============================================================ -->
+<script>
+// LOADER
+window.addEventListener('load', () => {
+  setTimeout(()=> document.getElementById('loader').classList.add('hide'), 400);
+});
+
+// SCROLL SUAVE
+function scrollToId(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+// PARTÍCULAS
+const pContainer = document.getElementById("particles");
+for(let i=0;i<60;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"%";
+  p.style.top=Math.random()*100+"%";
+  p.style.animationDuration=(6+Math.random()*8)+"s";
+  p.style.animationDelay=(Math.random()*5)+"s";
+  pContainer.appendChild(p);
+}
+
+// PARALLAX DO BOTÃO
+document.addEventListener("mousemove", e => {
+  const x = (window.innerWidth/2 - e.clientX)/60;
+  document.querySelectorAll("[data-depth-btn]").forEach(el=>{
+    el.style.transform = `translateX(${x}px)`;
+  });
+});
+
+// TEMA CLARO/ESCURO
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
+function applyTheme(theme){
+  if(theme === 'light'){
+    document.body.classList.add('light-theme');
+    themeIcon.textContent = '🌞';
+  }else{
+    document.body.classList.remove('light-theme');
+    themeIcon.textContent = '🌙';
+  }
+  localStorage.setItem('ebookTheme', theme);
+}
+
+const storedTheme = localStorage.getItem('ebookTheme') || 'dark';
+applyTheme(storedTheme);
+
+themeToggle.addEventListener('click', () => {
+  const newTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+  applyTheme(newTheme);
+});
+
+// MODAL PDF
+function openPDF(path){
+  document.getElementById("modalBg").style.display="block";
+  document.getElementById("modalPDF").style.display="block";
+  document.getElementById("pdfFrame").src = path;
+}
+function closePDF(){
+  document.getElementById("modalBg").style.display="none";
+  document.getElementById("modalPDF").style.display="none";
+  document.getElementById("pdfFrame").src="";
+}
+
+// CATÁLOGO (dinâmico, com localStorage)
+const defaultCatalog = [
+  {
+    id:1,
+    title:"Lei de Coulomb — E-book 1",
+    desc:"Conteúdo completo sobre força elétrica e interações entre cargas.",
+    pdf:"pdf/ebook1.pdf",
+    thumb:"pdf/preview1.jpg"
+  },
+  {
+    id:2,
+    title:"Campo Elétrico — E-book 2",
+    desc:"Conceitos fundamentais do campo elétrico e suas propriedades.",
+    pdf:"pdf/ebook2.pdf",
+    thumb:"pdf/preview2.jpg"
+  }
+];
+
+let catalogItems = [];
+
+function loadCatalog(){
+  const data = localStorage.getItem('catalogItems');
+  catalogItems = data ? JSON.parse(data) : defaultCatalog.slice();
+  renderCatalog();
+}
+
+function saveCatalogToStorage(){
+  localStorage.setItem('catalogItems', JSON.stringify(catalogItems));
+}
+
+function renderCatalog(){
+  const container = document.getElementById('catalogContainer');
+  container.innerHTML = "";
+
+  catalogItems.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'catalog-card';
+
+    card.innerHTML = `
+      <div class="magnify-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 001.48-5.34C15.18 5.01 12.4 2.5 9 2.5S2.82 5.01 2.09 8.39c-.73 3.38 1.3 6.72 4.48 7.79 2.05.68 4.26.25 5.89-1.05l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6.5 0C6.01 14 4 11.99 4 9.5S6.01 5 8.5 5 13 7.01 13 9.5 10.99 14 8.5 14z"/>
+        </svg>
+      </div>
+      <div class="pdf-thumb" style="background-image:url('${item.thumb}')"></div>
+      <h3>${item.title}</h3>
+      <p style="color:var(--text-muted); font-size:.9rem;">${item.desc}</p>
+      <button class="download-btn" data-pdf="${item.pdf}">
+        <span>⬇</span> Download PDF
+      </button>
+    `;
+
+    card.addEventListener('click', () => openPDF(item.pdf));
+
+    container.appendChild(card);
+  });
+
+  // Card de adicionar novo
+  const addCard = document.createElement('div');
+  addCard.className = 'catalog-card add-card';
+  addCard.innerHTML = `
+    <div class="add-plus">+</div>
+    <div style="font-size:.9rem;color:var(--text-muted);">
+      Adicionar novo PDF<br><small>(Admin)</small>
+    </div>
+  `;
+  addCard.addEventListener('click', openAdminPanel);
+  container.appendChild(addCard);
+
+  // Eventos de download (parar propagação)
+  container.querySelectorAll('.download-btn').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      e.stopPropagation();
+      const pdf = btn.getAttribute('data-pdf');
+      window.open(pdf, "_blank");
+    });
+  });
+}
+
+// ADMIN
+let adminAuthed = false;
+const ADMIN_PASSWORD = "admin123"; // você pode mudar aqui
+
+function openAdminPanel(){
+  if(!adminAuthed){
+    const pass = prompt("Senha de admin:");
+    if(pass !== ADMIN_PASSWORD){
+      alert("Senha incorreta.");
+      return;
+    }
+    adminAuthed = true;
+  }
+  document.getElementById('adminBg').style.display = 'block';
+  document.getElementById('adminModal').style.display = 'block';
+
+  // limpa campos
+  document.getElementById('adminTitle').value = "";
+  document.getElementById('adminDesc').value = "";
+  document.getElementById('adminPdf').value = "";
+  document.getElementById('adminThumb').value = "";
+}
+
+document.getElementById('adminBg').addEventListener('click', closeAdminPanel);
+function closeAdminPanel(){
+  document.getElementById('adminBg').style.display = 'none';
+  document.getElementById('adminModal').style.display = 'none';
+}
+
+function saveCatalogItem(){
+  const title = document.getElementById('adminTitle').value.trim();
+  const desc  = document.getElementById('adminDesc').value.trim();
+  const pdf   = document.getElementById('adminPdf').value.trim();
+  const thumb = document.getElementById('adminThumb').value.trim();
+
+  if(!title || !desc || !pdf || !thumb){
+    alert("Preencha todos os campos.");
+    return;
+  }
+
+  const newItem = {
+    id: Date.now(),
+    title, desc, pdf, thumb
+  };
+  catalogItems.push(newItem);
+  saveCatalogToStorage();
+  renderCatalog();
+  closeAdminPanel();
+}
+
+function resetCatalog(){
+  if(confirm("Deseja realmente resetar o catálogo para o padrão?")){
+    catalogItems = defaultCatalog.slice();
+    saveCatalogToStorage();
+    renderCatalog();
+  }
+}
+
+// ScrollReveal
+ScrollReveal().reveal('.reveal',{
+  duration:1000,
+  distance:'50px',
+  origin:'bottom',
+  interval:150,
+  opacity:0
+});
+
+// INICIALIZA
+loadCatalog();
+
+</script>
+</body>
+</html>
