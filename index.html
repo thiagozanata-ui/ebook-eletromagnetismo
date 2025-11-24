@@ -32,7 +32,7 @@ body{
 }
 
 /* ============================================================
-   FUNDO BLUR + MOVIMENTO
+   FUNDO BLUR
 ============================================================ */
 .apple-bg{
   position:fixed;
@@ -59,7 +59,7 @@ body::before{
 }
 
 /* ============================================================
-   LINHAS DE CAMPO ELÉTRICO
+   CAMPO ELÉTRICO
 ============================================================ */
 .field-layer{
   position:fixed;
@@ -135,15 +135,12 @@ body::before{
   gap:60px;
 }
 
-.hero-content{
-  max-width:560px;
-}
+.hero-content{ max-width:560px; }
 
 .hero-title{
   font-size:clamp(2.7rem,4vw,3.8rem);
   font-weight:700;
   margin-bottom:12px;
-  letter-spacing:-.03em;
 }
 
 .hero-highlight{
@@ -152,211 +149,119 @@ body::before{
   color:transparent;
 }
 
-.hero-sub{
-  color:#d5e4ff;
-  font-size:1.1rem;
-  margin-bottom:10px;
-}
-
-.hero-sub2{
-  color:#a8b4ce;
-  font-size:1rem;
-  margin-bottom:28px;
-}
-
-.hero-sub2 span{
-  color:#dbeafe;
-  font-weight:600;
-}
-
-.btn-primary{
-  padding:14px 32px;
-  border-radius:999px;
-  border:none;
-  background:linear-gradient(135deg,#2563eb,#38bdf8);
-  color:white;
-  font-weight:600;
-  text-transform:uppercase;
-  box-shadow:0 20px 40px rgba(0,0,0,0.55);
-  cursor:pointer;
-  transition:.2s;
-}
-
-.btn-primary:hover{
-  transform:translateY(-3px);
-}
-
 /* ============================================================
-   CARTÃO
+   CATÁLOGO DE PDF
 ============================================================ */
-.hero-card{
-  width:360px;
-  padding:22px 20px;
-  border-radius:26px;
+
+.catalog-container{
+  max-width:1300px;
+  margin:50px auto;
+  padding:20px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:28px;
+  justify-content:center;
+}
+
+.catalog-card{
+  width:280px;
   background:var(--glass-bg);
-  backdrop-filter:blur(26px);
-  border:1px solid rgba(200,220,255,0.45);
-  box-shadow:0 40px 100px rgba(0,0,0,0.8);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(200,220,255,0.4);
+  border-radius:20px;
+  padding:16px;
+  box-shadow:0 0 50px rgba(0,0,0,0.7);
+  cursor:pointer;
+  transition:.25s;
   position:relative;
 }
 
-.hero-card-header{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:12px;
-  color:#e2edff;
+.catalog-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 0 70px rgba(56,189,248,0.5);
 }
 
-.hero-pill{
-  padding:4px 10px;
-  border-radius:999px;
-  background:rgba(15,23,42,0.7);
-  border:1px solid rgba(191,219,254,0.6);
-}
-
-.hero-card-title{
-  font-size:1rem;
+.pdf-thumb{
+  width:100%;
+  height:180px;
+  border-radius:14px;
+  background:#000;
+  background-size:cover;
+  background-position:center;
+  border:1px solid rgba(120,160,255,0.4);
   margin-bottom:12px;
 }
 
-.hero-card-field{
-  font-size:.86rem;
-  color:#9bb0d1;
-}
-
-.hero-card-field span{
-  display:block;
-  margin-top:4px;
-  color:#e9f1ff;
-}
-
-/* ============================================================
-   CARGAS (AGORA FORA DO TEXTO)
-============================================================ */
-.hero-charge{
+/* ÍCONE LUPA */
+.magnify-icon{
+  position:absolute;
+  top:14px;
+  right:14px;
   width:42px;
   height:42px;
   border-radius:50%;
-  background:#020617;
-  border:2px solid #38bdf8;
-  color:#e0f8ff;
+  background:linear-gradient(135deg,#2563eb,#38bdf8);
   display:flex;
   align-items:center;
   justify-content:center;
-  position:absolute;
-  font-size:1.3rem;
-  font-weight:700;
-  box-shadow:0 0 14px rgba(56,189,248,0.7);
+  box-shadow:0 0 16px rgba(56,189,248,0.55);
 }
 
-/* novas posições */
-.float-plus{
-  top:-20px;
-  left:-20px;
-  animation:float1 4s ease-in-out infinite;
-}
-
-.float-minus{
-  bottom:-20px;
-  right:-20px;
-  animation:float2 5s ease-in-out infinite;
-}
-
-@keyframes float1{
-  0%,100%{ transform:translateY(-6px); }
-  50%{ transform:translateY(6px); }
-}
-@keyframes float2{
-  0%,100%{ transform:translateY(6px); }
-  50%{ transform:translateY(-6px); }
+.magnify-icon svg{
+  width:22px;
+  fill:white;
 }
 
 /* ============================================================
-   PDF – FULLSCREEN
+   POP-UP MODAL PDF
 ============================================================ */
-.section{
-  max-width:95%;
-  margin:60px auto;
-  padding:20px;
-}
 
-.pdf-box{
-  background:rgba(15,23,42,0.9);
-  border-radius:22px;
-  padding:38px 40px;
-  border:1px solid rgba(200,220,255,0.38);
-  box-shadow:0 0 70px rgba(0,0,0,0.85);
-  position:relative;
-}
-
-.pdf-viewer{
-  width:100%;
-  height:88vh;
-  border-radius:16px;
-  border:1px solid rgba(59,130,246,0.6);
-  transition:.4s ease-in-out;
-  background:#020617;
-}
-
-.pdf-fullscreen{
-  position:fixed !important;
-  inset:0 !important;
-  z-index:9999 !important;
-  width:100vw !important;
-  height:100vh !important;
-  border-radius:0 !important;
-  border:none !important;
-}
-
-.fullscreen-btn{
-  position:absolute;
-  right:20px;
-  top:20px;
-  padding:10px 18px;
-  border-radius:999px;
-  background:linear-gradient(135deg,#2563eb,#38bdf8);
-  color:white;
-  font-size:.9rem;
-  font-weight:600;
-  cursor:pointer;
-  border:none;
-  outline:none;
-  box-shadow:0 0 22px rgba(56,189,248,0.6);
-  transition:.2s;
-  z-index:10000;
-}
-
-.fullscreen-btn:hover{
-  transform:translateY(-2px);
-  filter:brightness(1.1);
-}
-
-.pdf-backdrop{
+.modal-bg{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.65);
+  background:rgba(0,0,0,0.75);
   backdrop-filter:blur(6px);
-  z-index:9998;
+  z-index:999998;
   display:none;
 }
 
-.pdf-backdrop.active{
-  display:block !important;
+.modal{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
+  height:90%;
+  background:#020617;
+  border-radius:18px;
+  z-index:999999;
+  display:none;
+  box-shadow:0 0 50px rgba(0,0,0,0.9);
 }
 
-/* ============================================================
-   FOOTER
-============================================================ */
-footer{
-  padding:30px;
-  text-align:center;
-  color:#a8b4ce;
+.modal iframe{
+  width:100%;
+  height:100%;
+  border:none;
+  border-radius:18px;
 }
 
-footer b{
-  color:#dce7ff;
-  margin-top:10px;
-  display:block;
+.modal-close{
+  position:absolute;
+  top:-50px;
+  right:0;
+  font-size:22px;
+  background:#2563eb;
+  padding:10px 20px;
+  border-radius:999px;
+  cursor:pointer;
+  color:white;
+  font-weight:600;
+  box-shadow:0 0 25px rgba(56,189,248,0.55);
+}
+
+.modal-close:hover{
+  filter:brightness(1.2);
 }
 
 </style>
@@ -365,7 +270,7 @@ footer b{
 
 <div class="apple-bg"></div>
 
-<!-- LINHAS DE CAMPO -->
+<!-- CAMPO -->
 <div class="field-layer">
   <div class="field-line line1"></div>
   <div class="field-line line2"></div>
@@ -382,59 +287,64 @@ footer b{
   <div class="hero-inner">
 
     <div class="hero-content" data-depth="0.35">
-
       <h1 class="hero-title">E-book <span class="hero-highlight">Eletromagnetismo</span></h1>
-
       <p class="hero-sub">Lei de Coulomb e Campo Elétrico aplicada à Engenharia Elétrica.</p>
+      <button class="btn-primary"
+        onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});">
+        Ver Catálogo
+      </button>
+    </div>
 
-      <p class="hero-sub2">
-        Desenvolvido na <span>Faculdade Unibr Botucatu</span> — turma
-        <span>Engenharia Elétrica 10N</span>.
+  </div>
+</section>
+
+<!-- ============================================================
+     CATÁLOGO DE ITENS (PDF PREVIEW)
+============================================================ -->
+<section id="catalogo">
+  <h2 style="text-align:center;margin-bottom:25px;font-size:2rem;">Catálogo de Conteúdo</h2>
+
+  <div class="catalog-container">
+
+    <!-- CARD DO PDF -->
+    <div class="catalog-card" onclick="openPDF()">
+
+      <div class="magnify-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27a6.471 
+              6.471 0 001.48-5.34C15.18 5.01 12.4 2.5 
+              9 2.5S2.82 5.01 2.09 8.39c-.73 3.38 1.3 
+              6.72 4.48 7.79 2.05.68 4.26.25 
+              5.89-1.05l.27.28v.79l4.25 
+              4.25c.41.41 1.08.41 1.49 
+              0 .41-.41.41-1.08 0-1.49L15.5 14zm-6.5 
+              0C6.01 14 4 11.99 4 9.5S6.01 5 8.5 
+              5 13 7.01 13 9.5 10.99 14 8.5 14z"/>
+        </svg>
+      </div>
+
+      <div class="pdf-thumb" style="background-image:url('pdf/preview.jpg');"></div>
+
+      <h3 style="margin-bottom:6px;">Lei de Coulomb — Capítulo Completo</h3>
+      <p style="color:var(--text-muted); font-size:.9rem;">
+        PDF completo do E-book incluindo campo elétrico, forças e aplicações reais.
       </p>
 
-      <button class="btn-primary"
-        onclick="document.getElementById('leitura').scrollIntoView({behavior:'smooth'});">
-        Ler Agora
-      </button>
-
-    </div>
-
-    <!-- CARTÃO -->
-    <div class="hero-card">
-
-      <div class="hero-card-header">
-        <div class="hero-pill">Lei de Coulomb</div>
-        <span>Campo elétrico & cargas</span>
-      </div>
-
-      <div class="hero-card-title">Interação entre cargas elétricas</div>
-
-      <div class="hero-card-field">
-        Capítulo 1
-        <span>Conceitos básicos • Força elétrica • Exemplos práticos</span>
-      </div>
-
-      <div class="hero-charge float-plus">+</div>
-      <div class="hero-charge float-minus">−</div>
-
     </div>
 
   </div>
 </section>
 
-<!-- PDF -->
-<section id="leitura" class="section reveal">
-  <div class="pdf-box">
-    <h2>Visualização do PDF</h2>
-    <p style="color:#9db6d8;">E-book Eletromagnetismo — Lei de Coulomb e Campo Elétrico</p>
+<!-- ============================================================
+     POP-UP DO PDF
+============================================================ -->
+<div class="modal-bg" id="modalBg"></div>
 
-    <button class="fullscreen-btn" id="toggleFull">Tela cheia</button>
+<div class="modal" id="modalPDF">
+  <iframe src="pdf/ebook.pdf"></iframe>
+  <div class="modal-close" onclick="closePDF()">Fechar</div>
+</div>
 
-    <iframe id="pdfViewer" class="pdf-viewer" src="pdf/ebook.pdf"></iframe>
-  </div>
-
-  <div class="pdf-backdrop" id="pdfBg"></div>
-</section>
 
 <!-- FOOTER -->
 <footer class="reveal">
@@ -443,6 +353,7 @@ footer b{
   Wellington Ramires
   <b>Dr. Guilherme Augusto Marabezzi Clerice</b>
 </footer>
+
 
 <!-- PARALLAX -->
 <script>
@@ -468,7 +379,7 @@ ScrollReveal().reveal('.reveal',{
 });
 </script>
 
-<!-- GERADOR DE PARTÍCULAS -->
+<!-- Partículas -->
 <script>
 const container = document.getElementById("particles");
 for(let i=0;i<60;i++){
@@ -482,26 +393,16 @@ for(let i=0;i<60;i++){
 }
 </script>
 
-<!-- FULLSCREEN DO PDF -->
+<!-- MODAL DO PDF -->
 <script>
-const btn = document.getElementById("toggleFull");
-const viewer = document.getElementById("pdfViewer");
-const bg = document.getElementById("pdfBg");
-let full = false;
-
-btn.onclick = () => {
-  full = !full;
-
-  if(full){
-    viewer.classList.add("pdf-fullscreen");
-    bg.classList.add("active");
-    btn.innerText = "Sair da tela cheia";
-  }else{
-    viewer.classList.remove("pdf-fullscreen");
-    bg.classList.remove("active");
-    btn.innerText = "Tela cheia";
-  }
-};
+function openPDF(){
+  document.getElementById("modalBg").style.display="block";
+  document.getElementById("modalPDF").style.display="block";
+}
+function closePDF(){
+  document.getElementById("modalBg").style.display="none";
+  document.getElementById("modalPDF").style.display="none";
+}
 </script>
 
 </body>
