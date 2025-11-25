@@ -540,7 +540,7 @@ body::before{
   border:none;
   cursor:pointer;
   box-shadow:var(--shadow-neon);
-  display:none; /* começa escondido */
+  display:none; /* só mostra no modo admin */
   align-items:center;
   justify-content:center;
   font-size:1.3rem;
@@ -548,7 +548,7 @@ body::before{
 }
 
 /* ============================================================
-   SOBRE NÓS
+   SOBRE NÓS + BIO
 ============================================================ */
 .sobre-wrapper{
   margin-top:110px;
@@ -578,11 +578,46 @@ body::before{
 
 .sobre-card{
   background:var(--glass-bg);
-  border-radius:18px;
-  padding:14px 12px;
+  border-radius:999px;
+  padding:10px 14px;
   border:1px solid rgba(191,219,254,0.7);
   text-align:center;
   font-size:.9rem;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.sobre-card:hover{
+  box-shadow:var(--shadow-neon);
+  border-color:#38bdf8;
+}
+
+.sobre-card.active{
+  box-shadow:var(--shadow-neon);
+  border-color:#38bdf8;
+  background:rgba(15,23,42,0.9);
+}
+
+/* painel de bio */
+.bio-panel{
+  margin-top:26px;
+  padding:20px 18px;
+  border-radius:18px;
+  border:1px solid rgba(191,219,254,0.7);
+  background:var(--glass-bg);
+  box-shadow:var(--shadow-strong);
+  min-height:120px;
+}
+
+.bio-name{
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.bio-text{
+  font-size:.92rem;
+  color:var(--text-muted);
+  line-height:1.6;
 }
 
 .sobre-orientador{
@@ -708,17 +743,24 @@ footer{
     Projeto desenvolvido pela turma de Engenharia Elétrica da Faculdade Unibr Botucatu.
   </p>
 
-  <div class="sobre-grid">
-    <div class="sobre-card">Thiago Zanata</div>
-    <div class="sobre-card">Vitor dos Santos</div>
-    <div class="sobre-card">Wellington Ramires</div>
-    <div class="sobre-card">Kauan Ribeiro</div>
-    <div class="sobre-card">Luan Correia</div>
-    <div class="sobre-card">Felipe Brazil</div>
-    <div class="sobre-card">João Magalhães</div>
-    <div class="sobre-card">Marcos Vinicius</div>
-    <div class="sobre-card">Murilo Vendramini</div>
-    <div class="sobre-card">Thailisson Henrique</div>
+  <div class="sobre-grid" id="sobreGrid">
+    <div class="sobre-card" data-name="Thiago Zanata">Thiago Zanata</div>
+    <div class="sobre-card" data-name="Vitor dos Santos">Vitor dos Santos</div>
+    <div class="sobre-card" data-name="Wellington Ramires">Wellington Ramires</div>
+    <div class="sobre-card" data-name="Kauan Ribeiro">Kauan Ribeiro</div>
+    <div class="sobre-card" data-name="Luan Correia">Luan Correia</div>
+    <div class="sobre-card" data-name="Felipe Brazil">Felipe Brazil</div>
+    <div class="sobre-card" data-name="João Magalhães">João Magalhães</div>
+    <div class="sobre-card" data-name="Marcos Vinicius">Marcos Vinicius</div>
+    <div class="sobre-card" data-name="Murilo Vendramini">Murilo Vendramini</div>
+    <div class="sobre-card" data-name="Thailisson Henrique">Thailisson Henrique</div>
+  </div>
+
+  <div class="bio-panel" id="bioPanel">
+    <div class="bio-name" id="bioName">Clique em um nome para ver a mensagem.</div>
+    <div class="bio-text" id="bioText">
+      Aqui aparecerá um breve texto motivacional sobre cada integrante da turma.
+    </div>
   </div>
 
   <p class="sobre-orientador">
@@ -968,20 +1010,53 @@ ScrollReveal().reveal('.reveal',{
   opacity:0
 });
 
-// INICIALIZA
+// INICIALIZA CATALOGO
 loadCatalog();
 
 // Se estiver em modo admin, já dispara a tela de senha
 if(adminMode){
-  // não mostra o botão até senha correta
   adminFab.style.display = 'none';
   setTimeout(()=>{
     openAdminPanel();
   }, 600);
 } else {
-  // visitantes comuns nunca veem admin
   adminFab.style.display = 'none';
 }
+
+/* ============================================================
+   BIOGRAFIAS SOBRE NÓS
+============================================================ */
+const bios = {
+  "Thiago Zanata": "Me chamo Thiago Zanata, tenho 24 anos e estou concluindo a graduação em Engenharia Elétrica. Ao longo desses 5 anos, enfrentei inúmeros desafios, momentos de incerteza e até vontade de desistir. No entanto, a determinação e o compromisso com meus objetivos me fizeram seguir firme. Hoje, ao olhar para tudo que construí, percebo que cada esforço valeu a pena. Finalizo essa etapa com orgulho, maturidade e a certeza de que estou preparado para o próximo capítulo.",
+  "Vitor dos Santos": "Sou Vitor dos Santos, e durante essa jornada da Engenharia aprendi que crescer exige coragem. Foram anos de dedicação, estudo e superação. Cada obstáculo me ensinou a ser mais resiliente e cada conquista reforçou a certeza de que estava no caminho certo. Hoje carrego comigo a gratidão por tudo que vivi e a vontade de continuar evoluindo profissionalmente e pessoalmente.",
+  "Wellington Ramires": "Me chamo Wellington Ramires e trilhei esta caminhada com empenho e humildade. A Engenharia me ensinou disciplina, foco e persistência. Nos momentos difíceis, encontrei força em acreditar no futuro que estava construindo. Hoje encerro uma etapa importante com a sensação de dever cumprido e com a motivação renovada para enfrentar novos desafios.",
+  "Kauan Ribeiro": "Sou Kauan Ribeiro, e a experiência na Engenharia Elétrica moldou minha forma de enxergar o mundo. Com esforço diário, longas noites de estudo e muita determinação, aprendi a valorizar cada pequeno avanço. O conhecimento adquirido é apenas parte da conquista; a outra parte está no amadurecimento pessoal. Saio dessa etapa mais forte, preparado e motivado.",
+  "Luan Correia": "Me chamo Luan Correia e sempre soube que a jornada seria desafiadora, mas também transformadora. A Engenharia me mostrou que paciência, dedicação e persistência são pilares essenciais. A cada semestre concluído, eu fortalecia minha confiança. Hoje reconheço o quanto evoluí e sigo convicto de que este é apenas o começo de uma trajetória promissora.",
+  "Felipe Brazil": "Sou Felipe Brazil, e minha trajetória acadêmica foi marcada por esforço constante e aprendizado contínuo. Tive desafios, dúvidas e vitórias — e em cada um desses momentos cresci como estudante e como pessoa. A Engenharia não apenas me ofereceu conhecimento técnico, mas também resiliência e responsabilidade. Levo comigo gratidão e motivação para o futuro.",
+  "João Magalhães": "Me chamo João Magalhães e sempre acreditei que o conhecimento é a ferramenta mais poderosa que alguém pode conquistar. Durante o curso, enfrentei dificuldades, mas jamais perdi a determinação. Cada disciplina, cada trabalho, cada conquista reforçou meu propósito. Hoje finalizo essa etapa com orgulho e pronto para novos desafios profissionais.",
+  "Marcos Vinicius": "Sou Marcos Vinicius, e minha história na Engenharia foi construída com esforço, disciplina e foco. Os desafios enfrentados no caminho serviram como degraus para minha evolução. A cada semestre vencido, eu me tornava mais forte e preparado. Hoje carrego comigo não apenas conhecimento técnico, mas também uma mentalidade madura e perseverante.",
+  "Murilo Vendramini": "Me chamo Murilo Vendramini e posso afirmar que esta caminhada na Engenharia me transformou profundamente. As dificuldades moldaram minha força e as conquistas fortaleceram minha motivação. Com dedicação, aprendi a superar limites e a confiar no meu potencial. Encerrar essa fase é motivo de orgulho e inspiração para o futuro.",
+  "Thailisson Henrique": "Sou Thailisson Henrique e desde o início da graduação acreditei no poder da persistência. A Engenharia exigiu disciplina, responsabilidade e coragem, e em troca me ofereceu crescimento e maturidade. Hoje termino esta etapa certo de que cada desafio superado me preparou para alcançar objetivos ainda maiores. Sigo motivado e determinado para o próximo capítulo."
+};
+
+const sobreCards = document.querySelectorAll('.sobre-card');
+const bioNameEl = document.getElementById('bioName');
+const bioTextEl = document.getElementById('bioText');
+
+sobreCards.forEach(card=>{
+  card.addEventListener('click', () => {
+    const name = card.getAttribute('data-name');
+    const text = bios[name] || 'Texto não encontrado.';
+
+    // destaca card
+    sobreCards.forEach(c=>c.classList.remove('active'));
+    card.classList.add('active');
+
+    // atualiza painel
+    bioNameEl.textContent = name;
+    bioTextEl.textContent = text;
+  });
+});
 
 </script>
 </body>
