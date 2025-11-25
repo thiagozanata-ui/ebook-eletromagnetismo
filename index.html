@@ -1001,14 +1001,16 @@ function resetCatalog(){
   }
 }
 
-// ScrollReveal
-ScrollReveal().reveal('.reveal',{
-  duration:1000,
-  distance:'50px',
-  origin:'bottom',
-  interval:150,
-  opacity:0
-});
+// ScrollReveal (com proteção caso a lib não carregue)
+if (window.ScrollReveal) {
+  ScrollReveal().reveal('.reveal',{
+    duration:1000,
+    distance:'50px',
+    origin:'bottom',
+    interval:150,
+    opacity:0
+  });
+}
 
 // INICIALIZA CATALOGO
 loadCatalog();
@@ -1057,7 +1059,6 @@ sobreCards.forEach(card=>{
     bioTextEl.textContent = text;
   });
 });
-
 </script>
 </body>
 </html>
